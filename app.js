@@ -9,6 +9,7 @@ const passport = require("passport");
 const mongoose = require("mongoose");
 
 const logger = require("./logger");
+const usersRouter = require("./routes/users");
 
 // DB
 mongoose.connect(process.env.DATABASE_URL, {
@@ -32,6 +33,9 @@ app.use(express.json());
 app.use(passport.initialize());
 app.use(passport.session());
 require("./passport")(passport);
+
+// Routes
+app.use("/api/users", usersRouter);
 
 // static Frontend
 app.use(express.static(path.join(__dirname, "public")));
