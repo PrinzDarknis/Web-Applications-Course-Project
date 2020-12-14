@@ -19,6 +19,11 @@ const UserSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  privacy: {
+    type: String,
+    enum: ["everyone", "registered", "friends", "private"],
+    default: "everyone",
+  },
   friends: [
     {
       type: String,
@@ -58,12 +63,21 @@ UserSchema.method("checkPassword", function (candidatePassword, callback) {
   bycrypt.compare(candidatePassword, this.password, callback);
 });
 
-UserSchema.method("getTransmitObjet", function () {
+UserSchema.method("getTransmitObjet", function (privacy = false) {
+  if (privacy) {
+    return {
+      id: this._id,
+      name: this.name,
+      username: this.username,
+    };
+  }
+
   return {
     id: this._id,
     name: this.name,
     username: this.username,
     email: this.email,
+    privacy: this.privacy,
     friends: this.friends,
     friendsAsked: this.friendsAsked,
   };

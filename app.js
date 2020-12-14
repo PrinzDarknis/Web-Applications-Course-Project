@@ -36,6 +36,7 @@ require("./passport")(passport);
 
 // Routes
 app.use("/api/users", usersRouter);
+app.use("/api", express.static(path.join(__dirname, "apidoc"))); // API Documentation
 
 // static Frontend
 app.use(express.static(path.join(__dirname, "public")));

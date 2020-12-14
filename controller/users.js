@@ -71,7 +71,7 @@ exports.authenticate = function (req, res) {
       res.json({
         success: true,
         token: `JWT ${token}`,
-        user: userData,
+        result: userData,
       });
     });
   });
@@ -79,5 +79,27 @@ exports.authenticate = function (req, res) {
 
 // Profile
 exports.profile = function (req, res) {
-  res.json({ success: true, user: req.user.getTransmitObjet() });
+  let privacy =
+    req.user._id != req.targetUser._id &&
+    !req.targetUser.friends.includes(req.user._id);
+
+  res.json({ success: true, result: req.targetUser.getTransmitObjet(privacy) });
+};
+
+// Middleware
+exports.MW_getUserByID = function (req, res, next) {
+  // find Book
+  User.findById(req.params.id).exec((err, user) => {
+    if (err) {
+      logger.logError("Error in Get User by ID", err);
+      return res.status(500).json({ success: false, msg: err.message });
+    }
+
+    if (user == null) {
+      return res.status(404).json({ success: false, msg: "Cannot find User" });
+    }
+
+    req.targetUser = user;
+    next();
+  });
 };
