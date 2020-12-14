@@ -171,6 +171,79 @@
     "groupTitle": "User"
   },
   {
+    "type": "post",
+    "url": "/api/users/:id/askFriend",
+    "title": "Ask for Friendship",
+    "name": "BefriendUser",
+    "group": "User",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "allowedValues": [
+              "\"friend\"",
+              "\"asked\""
+            ],
+            "optional": false,
+            "field": "state",
+            "description": "<p>State of the request.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "success",
+            "description": "<p>Was request successful?.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"state\": \"asked\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "UsernameTaken",
+            "description": "<p>The Username is already taken.</p>"
+          }
+        ],
+        "Error 5xx": [
+          {
+            "group": "Error 5xx",
+            "optional": false,
+            "field": "ServerError",
+            "description": "<p>Something happened on the Server Side</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "UsernameTaken:",
+          "content": "HTTP/1.1 409 Conflict\n{\n  \"success\": false,\n  \"msg\": \"Username is taken\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "ServerError:",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n  \"success\": false,\n  \"msg\": \"Error message\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./routes/users.js",
+    "groupTitle": "User"
+  },
+  {
     "type": "get",
     "url": "/api/users/:id",
     "title": "Request User Information",

@@ -3,6 +3,7 @@ const { isValidObjectId } = require("mongoose");
 const passport = require("passport");
 const { logError, logDebug } = require("./logger");
 
+// Errors: ErrorParams
 module.exports.checkValidate = function (req, res, next) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -14,6 +15,7 @@ module.exports.checkValidate = function (req, res, next) {
   next();
 };
 
+// Errors: ErrorID
 module.exports.checkID = function (req, res, next) {
   if (!isValidObjectId(req.params.id)) {
     return res
@@ -24,6 +26,7 @@ module.exports.checkID = function (req, res, next) {
   next();
 };
 
+// Errors: Error500
 module.exports.authenticateOptional = function (req, res, next) {
   passport.authenticate("jwt", { session: false }, (err, user, info) => {
     if (err) {

@@ -1,5 +1,6 @@
 const express = require("express");
 const { check } = require("express-validator");
+const passport = require("passport");
 const usersController = require("../controller/users");
 const {
   checkValidate,
@@ -47,6 +48,13 @@ const {
  *          }
  *       ]
  *     }
+ */
+
+/**
+ * @apiDefine ErrorUnauthorized
+ * @apiError Unauthorized needs valide JWT
+ * @apiErrorExample Unauthorized:
+ *     HTTP/1.1 401 Unauthorized
  */
 
 /**
@@ -227,6 +235,42 @@ router.get(
   "/:id",
   [checkID, usersController.MW_getUserByID, authenticateOptional],
   usersController.profile
+);
+
+/**
+ * @api {post} /api/users/:id/askFriend Ask for Friendship
+ * @apiName BefriendUser
+ * @apiGroup User
+ *
+ * @apiHeader (Headers) {String} Authorization Authorization via JWT.
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *       "Authorization": "JWT Ahjdkjsdjiw..."
+ *     }
+ *
+ * @apiUse apiSuccess_success
+ * @apiSuccess {String="friend","asked"} state State of the request.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "success": true,
+ *       "state": "asked"
+ *     }
+ *
+ * @apiUse ErrorUnauthorized
+ * @apiUse ErrorID
+ * @apiUse Error404
+ * @apiUse Error500
+ */
+router.post(
+  "/:id/askFriend",
+  [
+    passport.authenticate("jwt", { session: false }),
+    checkID,
+    usersController.MW_getUserByID,
+  ],
+  usersController.askFriend
 );
 
 module.exports = router;
