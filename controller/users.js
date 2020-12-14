@@ -80,8 +80,9 @@ exports.authenticate = function (req, res) {
 // Profile
 exports.profile = function (req, res) {
   let privacy =
-    req.user._id != req.targetUser._id &&
-    !req.targetUser.friends.includes(req.user._id);
+    !req.user ||
+    (!req.user._id.equals(req.targetUser._id) &&
+      !req.targetUser.friends.includes(req.user._id));
 
   res.json({ success: true, result: req.targetUser.getTransmitObjet(privacy) });
 };
