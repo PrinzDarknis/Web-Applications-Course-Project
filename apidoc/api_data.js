@@ -176,6 +176,26 @@ define({ "api": [
     "title": "Ask for Friendship",
     "name": "BefriendUser",
     "group": "User",
+    "header": {
+      "fields": {
+        "Headers": [
+          {
+            "group": "Headers",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Authorization via JWT.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Authorization\": \"JWT Ahjdkjsdjiw...\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "success": {
       "fields": {
         "Success 200": [
@@ -207,14 +227,29 @@ define({ "api": [
         }
       ]
     },
+    "version": "0.0.0",
+    "filename": "./routes/users.js",
+    "groupTitle": "User",
     "error": {
       "fields": {
         "Error 4xx": [
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "UsernameTaken",
-            "description": "<p>The Username is already taken.</p>"
+            "field": "Unauthorized",
+            "description": "<p>needs valide JWT</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "InvalideID",
+            "description": "<p>The given <code>id</code> is invalide</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "UserNotFound",
+            "description": "<p>The <code>id</code> of the User was not found.</p>"
           }
         ],
         "Error 5xx": [
@@ -228,8 +263,18 @@ define({ "api": [
       },
       "examples": [
         {
-          "title": "UsernameTaken:",
-          "content": "HTTP/1.1 409 Conflict\n{\n  \"success\": false,\n  \"msg\": \"Username is taken\"\n}",
+          "title": "Unauthorized:",
+          "content": "HTTP/1.1 401 Unauthorized",
+          "type": "json"
+        },
+        {
+          "title": "InvalideID:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n  \"success\": false,\n  \"msg\": \"invalid recource ID\",\n  \"id\": \"TheIvalideID\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "UserNotFound:",
+          "content": "HTTP/1.1 404 Not Found\n{\n  \"success\": false,\n  \"msg\": \"Cannot find User\"\n}",
           "type": "json"
         },
         {
@@ -238,10 +283,7 @@ define({ "api": [
           "type": "json"
         }
       ]
-    },
-    "version": "0.0.0",
-    "filename": "./routes/users.js",
-    "groupTitle": "User"
+    }
   },
   {
     "type": "get",
