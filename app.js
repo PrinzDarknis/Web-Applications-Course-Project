@@ -28,6 +28,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Middleware: Passport
+app.use(passport.initialize());
+app.use(passport.session());
+require("./passport")(passport);
+
 // static Frontend
 app.use(express.static(path.join(__dirname, "public")));
 
