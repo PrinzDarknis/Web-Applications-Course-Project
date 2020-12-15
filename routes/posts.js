@@ -123,6 +123,7 @@ const router = express.Router();
  * @api {get} /api/posts Get List of Posts
  * @apiName GetPosts
  * @apiGroup Post
+ * @apiDescription Gives Post without Comments to save Traffic
  *
  * @apiUse autorization_optional
  *
@@ -180,9 +181,10 @@ router.get(
  * @apiParam {Image} image An Image File to be in the Post.
  *
  * @apiUse apiSuccess_success
- * @apiSuccess {Object[]} result Array of Posts.
+ * @apiSuccess {Object[]} result Created Post.
  * @apiUse apiSuccess_PostAsResult
  * @apiSuccess {Object[]} result.comments Array of Comments.
+ * @apiSuccess {String} result.comments.id <code>id</code> of the Comment.
  * @apiSuccess {String} result.comments.author ID of the Author of the Comment.
  * @apiSuccess {String} result.comments.text Comment Text.
  * @apiSuccess {Date} result.comments.date Creation Date of the Comment.
@@ -191,23 +193,22 @@ router.get(
  *     HTTP/1.1 200 OK
  *     {
  *       "success": true,
- *       "result": [
- *          {
- *            "_id": "10A46...",
- *            "title": "Post Title",
- *            "text": "some text.",
- *            "author": "854964141SHZ...",
- *            "postDate": "15.12.2020 15:25:56",
- *            "image": "true",
- *            "comments": [
- *              {
- *                "author": "20A47",
- *                "text": "nice Post",
- *                "date": "15.12.2020 15:35:56"
- *              }
- *            ]
- *          }
- *       ]
+ *       "result": {
+ *          "_id": "10A46...",
+ *          "title": "Post Title",
+ *          "text": "some text.",
+ *          "author": "854964141SHZ...",
+ *          "postDate": "15.12.2020 15:25:56",
+ *          "image": "true",
+ *          "comments": [
+ *            {
+ *              "_id": "HGTZJN5663",
+ *              "author": "20A47",
+ *              "text": "nice Post",
+ *              "date": "15.12.2020 15:35:56"
+ *            }
+ *          ]
+ *       }
  *     }
  *
  * @apiUse ErrorID
@@ -238,6 +239,7 @@ router.post(
  * @apiSuccess {Object[]} result Array of Posts.
  * @apiUse apiSuccess_PostAsResult
  * @apiSuccess {Object[]} result.comments Array of Comments.
+ * @apiSuccess {String} result.comments.id <code>id</code> of the Comment.
  * @apiSuccess {String} result.comments.author ID of the Author of the Comment.
  * @apiSuccess {String} result.comments.text Comment Text.
  * @apiSuccess {Date} result.comments.date Creation Date of the Comment.
@@ -256,6 +258,7 @@ router.post(
  *            "image": "true",
  *            "comments": [
  *              {
+ *                "_id": "HGTZJN5663",
  *                "author": "20A47",
  *                "text": "nice Post",
  *                "date": "15.12.2020 15:35:56"
@@ -319,6 +322,7 @@ router.get(
  *
  * @apiUse apiSuccess_success
  * @apiSuccess {Object} result The Comment.
+ * @apiSuccess {String} result.id <code>id</code> of the Comment.
  * @apiSuccess {String} result.author ID of the Author of the Comment.
  * @apiSuccess {String} result.text Comment Text.
  * @apiSuccess {Date} result.date Creation Date of the Comment.
@@ -329,6 +333,7 @@ router.get(
  *       "success": true,
  *       "result": [
  *          {
+ *            "_id": "2HHIKKL",
  *            "author": "20A47",
  *            "text": "nice Post",
  *            "date": "15.12.2020 15:35:56"

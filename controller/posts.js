@@ -1,3 +1,5 @@
+const mongoose = require("mongoose");
+
 const logger = require("../logger");
 const Post = require("../models/post");
 
@@ -35,6 +37,7 @@ exports.writePost = function (req, res) {
 // Write Comment
 exports.writeComment = function (req, res) {
   let comment = {
+    _id: mongoose.Types.ObjectId(), // self generated, other cannot find again after save
     text: req.body.text,
     author: req.user._id,
     date: Date.now(),

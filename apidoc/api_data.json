@@ -39,6 +39,13 @@
             "group": "Success 200",
             "type": "String",
             "optional": false,
+            "field": "result.comments.id",
+            "description": "<p><code>id</code> of the Comment.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
             "field": "result.comments.author",
             "description": "<p>ID of the Author of the Comment.</p>"
           },
@@ -110,7 +117,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"result\": [\n     {\n       \"_id\": \"10A46...\",\n       \"title\": \"Post Title\",\n       \"text\": \"some text.\",\n       \"author\": \"854964141SHZ...\",\n       \"postDate\": \"15.12.2020 15:25:56\",\n       \"image\": \"true\",\n       \"comments\": [\n         {\n           \"author\": \"20A47\",\n           \"text\": \"nice Post\",\n           \"date\": \"15.12.2020 15:35:56\"\n         }\n       ]\n     }\n  ]\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"result\": [\n     {\n       \"_id\": \"10A46...\",\n       \"title\": \"Post Title\",\n       \"text\": \"some text.\",\n       \"author\": \"854964141SHZ...\",\n       \"postDate\": \"15.12.2020 15:25:56\",\n       \"image\": \"true\",\n       \"comments\": [\n         {\n           \"_id\": \"HGTZJN5663\",\n           \"author\": \"20A47\",\n           \"text\": \"nice Post\",\n           \"date\": \"15.12.2020 15:35:56\"\n         }\n       ]\n     }\n  ]\n}",
           "type": "json"
         }
       ]
@@ -294,6 +301,7 @@
     "title": "Get List of Posts",
     "name": "GetPosts",
     "group": "Post",
+    "description": "<p>Gives Post without Comments to save Traffic</p>",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -501,6 +509,13 @@
             "group": "Success 200",
             "type": "String",
             "optional": false,
+            "field": "result.id",
+            "description": "<p><code>id</code> of the Comment.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
             "field": "result.author",
             "description": "<p>ID of the Author of the Comment.</p>"
           },
@@ -530,7 +545,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"result\": [\n     {\n       \"author\": \"20A47\",\n       \"text\": \"nice Post\",\n       \"date\": \"15.12.2020 15:35:56\"\n     }\n  ]\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"result\": [\n     {\n       \"_id\": \"2HHIKKL\",\n       \"author\": \"20A47\",\n       \"text\": \"nice Post\",\n       \"date\": \"15.12.2020 15:35:56\"\n     }\n  ]\n}",
           "type": "json"
         }
       ]
@@ -657,7 +672,7 @@
             "type": "Object[]",
             "optional": false,
             "field": "result",
-            "description": "<p>Array of Posts.</p>"
+            "description": "<p>Created Post.</p>"
           },
           {
             "group": "Success 200",
@@ -665,6 +680,13 @@
             "optional": false,
             "field": "result.comments",
             "description": "<p>Array of Comments.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.comments.id",
+            "description": "<p><code>id</code> of the Comment.</p>"
           },
           {
             "group": "Success 200",
@@ -741,7 +763,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"result\": [\n     {\n       \"_id\": \"10A46...\",\n       \"title\": \"Post Title\",\n       \"text\": \"some text.\",\n       \"author\": \"854964141SHZ...\",\n       \"postDate\": \"15.12.2020 15:25:56\",\n       \"image\": \"true\",\n       \"comments\": [\n         {\n           \"author\": \"20A47\",\n           \"text\": \"nice Post\",\n           \"date\": \"15.12.2020 15:35:56\"\n         }\n       ]\n     }\n  ]\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"result\": {\n     \"_id\": \"10A46...\",\n     \"title\": \"Post Title\",\n     \"text\": \"some text.\",\n     \"author\": \"854964141SHZ...\",\n     \"postDate\": \"15.12.2020 15:25:56\",\n     \"image\": \"true\",\n     \"comments\": [\n       {\n         \"_id\": \"HGTZJN5663\",\n         \"author\": \"20A47\",\n         \"text\": \"nice Post\",\n         \"date\": \"15.12.2020 15:35:56\"\n       }\n     ]\n  }\n}",
           "type": "json"
         }
       ]

@@ -14,5 +14,5 @@ Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZDdhMzBmYjk1
 Content-Type: application/json
 
 {
-    "text": "Katze"
+    "text": "Neko"
 }
