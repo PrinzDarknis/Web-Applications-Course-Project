@@ -4,7 +4,7 @@ const logger = require("../logger");
 const User = require("../models/user");
 
 // Register
-exports.register = function (req, res, next) {
+exports.register = function (req, res) {
   // Username free?
   User.isUsernameTaken(req.body.username, (err, taken) => {
     if (err) {

@@ -313,7 +313,7 @@ define({ "api": [
           },
           {
             "group": "Parameter",
-            "type": "Date",
+            "type": "Number",
             "optional": false,
             "field": "max",
             "defaultValue": "20",
@@ -616,13 +616,6 @@ define({ "api": [
     "parameter": {
       "fields": {
         "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "Number",
-            "optional": false,
-            "field": "id",
-            "description": "<p>Posts unique ID.</p>"
-          },
           {
             "group": "Parameter",
             "type": "String",

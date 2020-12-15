@@ -1,0 +1,9 @@
+### Write Post
+POST http://localhost/api/posts/
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZDdhMzBmYjk1MWU0MTMxY2Y0YTJjYyIsIm5hbWUiOiJKb2huIERvZSIsInVzZXJuYW1lIjoiam9obiIsImVtYWlsIjoiam9obkBtYWlsLmRlIiwicHJpdmFjeSI6ImV2ZXJ5b25lIiwiZnJpZW5kcyI6WyI1ZmQ3ZDIwNmEyNDJhYjIxODg1ZDI0OTUiXSwiZnJpZW5kc0Fza2VkIjpbXSwiaWF0IjoxNjA4MDY5MjI5LCJleHAiOjE2MDg2NzQwMjl9.FePZrAFpFjhUEhNM_ucN3_NuRIhvJ8ERTxZrj-5Pl40
+Content-Type: application/json
+
+{
+    "title": "Hello World!",
+    "text": "I'm a cat."
+}

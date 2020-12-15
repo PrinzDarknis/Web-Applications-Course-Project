@@ -3,11 +3,15 @@ const { check } = require("express-validator");
 const passport = require("passport");
 
 const usersController = require("../controller/users");
+const postsController = require("../controller/posts");
 const {
   checkValidate,
   checkID,
   authenticateOptional,
 } = require("../middleware");
+
+const Post = require("../models/post");
+const { logError } = require("../logger");
 
 /**
  * @apiDefine Error404
@@ -124,7 +128,7 @@ const router = express.Router();
  *
  * @apiParam {Date} newer Show only Post newer than these Date. (optional)
  * @apiParam {Date} older Show only Post older than these Date. (optional)
- * @apiParam {Date} max=20 Maximal number of Post deliverd (starting from newest). (optional)
+ * @apiParam {Number} max=20 Maximal number of Post deliverd (starting from newest). (optional)
  * @apiParam {String} author Show only Post from the User with these <code>id</code>. (optional)
  *
  * @apiUse apiSuccess_success
@@ -150,7 +154,18 @@ const router = express.Router();
  * @apiUse ErrorParams
  * @apiUse Error500
  */
-router.get("/", [checkValidate, authenticateOptional], (req, res) => {});
+router.get(
+  "/",
+  [
+    check("newer").trim().isDate().toDate().optional(),
+    check("older").trim().isDate().toDate().optional(),
+    check("max").trim().isInt().toInt().optional(),
+    check("author").trim().isString().isLength({ min: 1 }).optional(),
+    checkValidate,
+    authenticateOptional,
+  ],
+  postsController.getPosts
+);
 
 /**
  * @api {post} /api/posts/ Write a Post
@@ -160,7 +175,6 @@ router.get("/", [checkValidate, authenticateOptional], (req, res) => {});
  * @apiUse autorization
  * @apiPermission registered
  *
- * @apiParam {Number} id Posts unique ID.
  * @apiParam {String{1..}} title Title of the Post.
  * @apiParam {String{3..}} text Post Text.
  * @apiParam {Image} image An Image File to be in the Post.
@@ -207,9 +221,23 @@ router.post(
     check("title").trim().isString().isLength({ min: 1 }),
     check("text").trim().isString().isLength({ min: 3 }),
     passport.authenticate("jwt", { session: false }),
-    usersController.MW_getUserByID,
   ],
-  (req, res) => {}
+  (req, res) => {
+    let post = new Post({
+      title: req.body.title,
+      text: req.body.text,
+      author: req.user._id,
+    });
+
+    post.save((err, newPost) => {
+      if (err) {
+        logError("Error while write Post", err);
+        return res.status(500).json({ success: false, msg: err.message });
+      }
+
+      res.json({ success: true, result: newPost });
+    });
+  }
 );
 
 /**
@@ -259,7 +287,7 @@ router.post(
 router.get(
   "/:id",
   [authenticateOptional, usersController.MW_checkPrivacy, checkID],
-  (req, res) => {}
+  postsController.getPost
 );
 
 /**
@@ -290,7 +318,7 @@ router.get(
     usersController.MW_checkPrivacy,
     checkID,
   ],
-  (req, res) => {}
+  postsController.getImage
 );
 
 /**
@@ -337,7 +365,7 @@ router.post(
     check("text").trim().isString().isLength({ min: 1 }),
     checkValidate,
   ],
-  (req, res) => {}
+  postsController.writeComment
 );
 
 module.exports = router;
