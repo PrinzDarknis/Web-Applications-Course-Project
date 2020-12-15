@@ -1,6 +1,7 @@
 const express = require("express");
 const { check } = require("express-validator");
 const passport = require("passport");
+
 const usersController = require("../controller/users");
 const {
   checkValidate,
@@ -104,7 +105,7 @@ const router = express.Router();
  * @apiUse apiSuccess_success
  * @apiUse apiSuccess_UserAsResult
  *
- * @apiSuccessExample Success-Response:
+ * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *     {
  *       "success": true,
@@ -149,7 +150,7 @@ router.post(
  * @apiSuccess {String} token  The JWt to use for authentification.
  * @apiUse apiSuccess_UserAsResult
  *
- * @apiSuccessExample Success-Response:
+ * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *     {
  *       "success": true,
@@ -201,7 +202,7 @@ router.post(
  * @apiUse apiSuccess_success
  * @apiUse apiSuccess_UserAsResult
  *
- * @apiSuccessExample Success-Response:
+ * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *     {
  *       "success": true,
@@ -212,7 +213,7 @@ router.post(
  *       }
  *     }
  *
- * @apiSuccessExample Success-Response Friend:
+ * @apiSuccessExample {json} Success-Response Friend:
  *     HTTP/1.1 200 OK
  *     {
  *       "success": true,
@@ -251,7 +252,7 @@ router.get(
  * @apiUse apiSuccess_success
  * @apiSuccess {String="friend","asked"} state State of the request.
  *
- * @apiSuccessExample Success-Response:
+ * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *     {
  *       "success": true,

@@ -1,5 +1,824 @@
 define({ "api": [
   {
+    "type": "get",
+    "url": "/api/posts/:id",
+    "title": "Get one Post",
+    "name": "GetPost",
+    "group": "Post",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Posts unique ID.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": "<p>Array of Posts.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result.comments",
+            "description": "<p>Array of Comments.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.comments.author",
+            "description": "<p>ID of the Author of the Comment.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.comments.text",
+            "description": "<p>Comment Text.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "result.comments.date",
+            "description": "<p>Creation Date of the Comment.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "success",
+            "description": "<p>Was request successful?.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.id",
+            "description": "<p>ID of the Post.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.title",
+            "description": "<p>Title of the Post.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.text",
+            "description": "<p>Text of the Post.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.author",
+            "description": "<p>Author of the Post.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "result.postDate",
+            "description": "<p>Creation Date of the Post.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "result.image",
+            "description": "<p>Has the Post an Image?</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"result\": [\n     {\n       \"id\": \"10A46...\",\n       \"title\": \"Post Title\",\n       \"text\": \"some text.\",\n       \"author\": \"854964141SHZ...\",\n       \"postDate\": \"15.12.2020 15:25:56\",\n       \"image\": \"true\",\n       \"comments\": [\n         {\n           \"author\": \"20A47\",\n           \"text\": \"nice Post\",\n           \"date\": \"15.12.2020 15:35:56\"\n         }\n       ]\n     }\n  ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./routes/posts.js",
+    "groupTitle": "Post",
+    "header": {
+      "fields": {
+        "Optional Headers": [
+          {
+            "group": "Optional Headers",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Authorization via JWT.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Authorization\": \"JWT Ahjdkjsdjiw...\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "InvalideID",
+            "description": "<p>The given <code>id</code> is invalide</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "Unauthorized",
+            "description": "<p>Following the Posts privacy you are not allowed to fetch the Data.</p>"
+          }
+        ],
+        "Error 5xx": [
+          {
+            "group": "Error 5xx",
+            "optional": false,
+            "field": "ServerError",
+            "description": "<p>Something happened on the Server Side</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "InvalideID:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n  \"success\": false,\n  \"msg\": \"invalid recource ID\",\n  \"id\": \"TheIvalideID\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Unauthorized:",
+          "content": "HTTP/1.1 401 Unauthorized",
+          "type": "json"
+        },
+        {
+          "title": "ServerError:",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n  \"success\": false,\n  \"msg\": \"Error message\"\n}",
+          "type": "json"
+        }
+      ]
+    }
+  },
+  {
+    "type": "get",
+    "url": "/api/posts/:id/image",
+    "title": "Get Image from Post",
+    "name": "GetPostImage",
+    "group": "Post",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Posts unique ID.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "allowedValues": [
+              "\"normal\"",
+              "\"small\""
+            ],
+            "optional": false,
+            "field": "Size",
+            "description": "<p>of the Image.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\nContent-Type: 'image/png'\nContent-Length: '1400'",
+          "type": "binary"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./routes/posts.js",
+    "groupTitle": "Post",
+    "header": {
+      "fields": {
+        "Optional Headers": [
+          {
+            "group": "Optional Headers",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Authorization via JWT.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Authorization\": \"JWT Ahjdkjsdjiw...\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "InvalideID",
+            "description": "<p>The given <code>id</code> is invalide</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "Unauthorized",
+            "description": "<p>Following the Posts privacy you are not allowed to fetch the Data.</p>"
+          }
+        ],
+        "Error 5xx": [
+          {
+            "group": "Error 5xx",
+            "optional": false,
+            "field": "ServerError",
+            "description": "<p>Something happened on the Server Side</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "InvalideID:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n  \"success\": false,\n  \"msg\": \"invalid recource ID\",\n  \"id\": \"TheIvalideID\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Unauthorized:",
+          "content": "HTTP/1.1 401 Unauthorized",
+          "type": "json"
+        },
+        {
+          "title": "ServerError:",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n  \"success\": false,\n  \"msg\": \"Error message\"\n}",
+          "type": "json"
+        }
+      ]
+    }
+  },
+  {
+    "type": "get",
+    "url": "/api/posts",
+    "title": "Get List of Posts",
+    "name": "GetPosts",
+    "group": "Post",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Date",
+            "optional": false,
+            "field": "newer",
+            "description": "<p>Show only Post newer than these Date. (optional)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Date",
+            "optional": false,
+            "field": "older",
+            "description": "<p>Show only Post older than these Date. (optional)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Date",
+            "optional": false,
+            "field": "max",
+            "defaultValue": "20",
+            "description": "<p>Maximal number of Post deliverd (starting from newest). (optional)</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "author",
+            "description": "<p>Show only Post from the User with these <code>id</code>. (optional)</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": "<p>Array of Posts.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "success",
+            "description": "<p>Was request successful?.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.id",
+            "description": "<p>ID of the Post.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.title",
+            "description": "<p>Title of the Post.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.text",
+            "description": "<p>Text of the Post.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.author",
+            "description": "<p>Author of the Post.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "result.postDate",
+            "description": "<p>Creation Date of the Post.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "result.image",
+            "description": "<p>Has the Post an Image?</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"result\": [\n     {\n       \"id\": \"10A46\",\n       \"title\": \"Post Title\",\n       \"text\": \"some text.\",\n       \"author\": \"854964141SHZ...\",\n       \"postDate\": \"15.12.2020 15:25:56\",\n       \"image\": \"true\"\n     }\n  ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./routes/posts.js",
+    "groupTitle": "Post",
+    "header": {
+      "fields": {
+        "Optional Headers": [
+          {
+            "group": "Optional Headers",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Authorization via JWT.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Authorization\": \"JWT Ahjdkjsdjiw...\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "InvalideParams",
+            "description": "<p>same of the given params are invalide</p>"
+          }
+        ],
+        "Error 5xx": [
+          {
+            "group": "Error 5xx",
+            "optional": false,
+            "field": "ServerError",
+            "description": "<p>Something happened on the Server Side</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "InvalideParams:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n  \"success\": false,\n  \"msg\": \"Invalide input\",\n  \"error\": [\n     {\n       \"value\": \"invalide Value\",\n       \"msg\": \"what is wrong\",\n       \"param\": \"parameter Name\",\n       \"location\": \"parameter location\"\n     }\n  ]\n}",
+          "type": "json"
+        },
+        {
+          "title": "ServerError:",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n  \"success\": false,\n  \"msg\": \"Error message\"\n}",
+          "type": "json"
+        }
+      ]
+    }
+  },
+  {
+    "type": "post",
+    "url": "/api/posts/:id/comment",
+    "title": "Write a Comment",
+    "name": "WriteComment",
+    "group": "Post",
+    "permission": [
+      {
+        "name": "registered",
+        "title": "Olny registered Users",
+        "description": ""
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Posts unique ID.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "result",
+            "description": "<p>The Comment.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.author",
+            "description": "<p>ID of the Author of the Comment.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.text",
+            "description": "<p>Comment Text.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "result.date",
+            "description": "<p>Creation Date of the Comment.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "success",
+            "description": "<p>Was request successful?.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"result\": [\n     {\n       \"author\": \"20A47\",\n       \"text\": \"nice Post\",\n       \"date\": \"15.12.2020 15:35:56\"\n     }\n  ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./routes/posts.js",
+    "groupTitle": "Post",
+    "header": {
+      "fields": {
+        "Headers": [
+          {
+            "group": "Headers",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Authorization via JWT.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Authorization\": \"JWT Ahjdkjsdjiw...\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "InvalideID",
+            "description": "<p>The given <code>id</code> is invalide</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "Unauthorized",
+            "description": "<p>needs valide JWT</p>"
+          }
+        ],
+        "Error 5xx": [
+          {
+            "group": "Error 5xx",
+            "optional": false,
+            "field": "ServerError",
+            "description": "<p>Something happened on the Server Side</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "InvalideID:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n  \"success\": false,\n  \"msg\": \"invalid recource ID\",\n  \"id\": \"TheIvalideID\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Unauthorized:",
+          "content": "HTTP/1.1 401 Unauthorized",
+          "type": "json"
+        },
+        {
+          "title": "Unauthorized:",
+          "content": "HTTP/1.1 401 Unauthorized",
+          "type": "json"
+        },
+        {
+          "title": "ServerError:",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n  \"success\": false,\n  \"msg\": \"Error message\"\n}",
+          "type": "json"
+        }
+      ]
+    }
+  },
+  {
+    "type": "post",
+    "url": "/api/posts/",
+    "title": "Write a Post",
+    "name": "WritePost",
+    "group": "Post",
+    "permission": [
+      {
+        "name": "registered",
+        "title": "Olny registered Users",
+        "description": ""
+      }
+    ],
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Posts unique ID.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "size": "1..",
+            "optional": false,
+            "field": "title",
+            "description": "<p>Title of the Post.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "size": "3..",
+            "optional": false,
+            "field": "text",
+            "description": "<p>Post Text.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Image",
+            "optional": false,
+            "field": "image",
+            "description": "<p>An Image File to be in the Post.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": "<p>Array of Posts.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result.comments",
+            "description": "<p>Array of Comments.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.comments.author",
+            "description": "<p>ID of the Author of the Comment.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.comments.text",
+            "description": "<p>Comment Text.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "result.comments.date",
+            "description": "<p>Creation Date of the Comment.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "success",
+            "description": "<p>Was request successful?.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.id",
+            "description": "<p>ID of the Post.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.title",
+            "description": "<p>Title of the Post.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.text",
+            "description": "<p>Text of the Post.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.author",
+            "description": "<p>Author of the Post.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "result.postDate",
+            "description": "<p>Creation Date of the Post.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "result.image",
+            "description": "<p>Has the Post an Image?</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"result\": [\n     {\n       \"id\": \"10A46...\",\n       \"title\": \"Post Title\",\n       \"text\": \"some text.\",\n       \"author\": \"854964141SHZ...\",\n       \"postDate\": \"15.12.2020 15:25:56\",\n       \"image\": \"true\",\n       \"comments\": [\n         {\n           \"author\": \"20A47\",\n           \"text\": \"nice Post\",\n           \"date\": \"15.12.2020 15:35:56\"\n         }\n       ]\n     }\n  ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./routes/posts.js",
+    "groupTitle": "Post",
+    "header": {
+      "fields": {
+        "Headers": [
+          {
+            "group": "Headers",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Authorization via JWT.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Authorization\": \"JWT Ahjdkjsdjiw...\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "InvalideID",
+            "description": "<p>The given <code>id</code> is invalide</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "Unauthorized",
+            "description": "<p>needs valide JWT</p>"
+          }
+        ],
+        "Error 5xx": [
+          {
+            "group": "Error 5xx",
+            "optional": false,
+            "field": "ServerError",
+            "description": "<p>Something happened on the Server Side</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "InvalideID:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n  \"success\": false,\n  \"msg\": \"invalid recource ID\",\n  \"id\": \"TheIvalideID\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Unauthorized:",
+          "content": "HTTP/1.1 401 Unauthorized",
+          "type": "json"
+        },
+        {
+          "title": "Unauthorized:",
+          "content": "HTTP/1.1 401 Unauthorized",
+          "type": "json"
+        },
+        {
+          "title": "ServerError:",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n  \"success\": false,\n  \"msg\": \"Error message\"\n}",
+          "type": "json"
+        }
+      ]
+    }
+  },
+  {
     "type": "post",
     "url": "/api/users/authenticate",
     "title": "Get JWT",

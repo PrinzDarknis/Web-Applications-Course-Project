@@ -25,6 +25,7 @@ const mongoose = require("mongoose");
 
 const logger = require("./logger");
 const usersRouter = require("./routes/users");
+const postsRouter = require("./routes/posts");
 
 // DB
 mongoose.connect(process.env.DATABASE_URL, {
@@ -51,6 +52,7 @@ require("./passport")(passport);
 
 // Routes
 app.use("/api/users", usersRouter);
+app.use("/api/posts", postsRouter);
 app.use("/api", express.static(path.join(__dirname, "apidoc"))); // API Documentation
 
 // static Frontend

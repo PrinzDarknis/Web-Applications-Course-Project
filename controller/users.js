@@ -211,3 +211,9 @@ exports.MW_getUserByID = function (req, res, next) {
     next();
   });
 };
+
+// Errors: ErrorPrivacy Error500
+exports.MW_checkPrivacy = function (req, res, next) {
+  // TODO MW_checkPrivacy
+  next();
+};
