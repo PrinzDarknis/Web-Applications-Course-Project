@@ -22,7 +22,7 @@
   "homepage": "https://github.com/PrinzDarknis/Web-Applications-Course-Project#readme",
   "apidoc": {
     "title": "Custom apiDoc browser title",
-    "url": "http://127.0.0.1"
+    "url": "http://course-project-assignment4.rahtiapp.fi/"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

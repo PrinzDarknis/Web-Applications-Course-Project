@@ -10,13 +10,62 @@ exports.getPost = function (req, res) {
 };
 
 exports.getImage = function (req, res) {
-  // TODO
-};
-
-exports.writePost = function (req, res) {
   // TODO Image
 };
 
+// Write Post
+exports.writePost = function (req, res) {
+  // TODO Image
+  let post = new Post({
+    title: req.body.title,
+    text: req.body.text,
+    author: req.user._id,
+  });
+
+  post.save((err, newPost) => {
+    if (err) {
+      logError("Error while write Post", err);
+      return res.status(500).json({ success: false, msg: err.message });
+    }
+
+    res.json({ success: true, result: newPost });
+  });
+};
+
+// Write Comment
 exports.writeComment = function (req, res) {
-  // TODO
+  let comment = {
+    text: req.body.text,
+    author: req.user._id,
+    date: Date.now(),
+  };
+
+  req.post.comments.push(comment);
+  req.post.save((err, newPost) => {
+    if (err) {
+      logError("Error while write Comment", err);
+      return res.status(500).json({ success: false, msg: err.message });
+    }
+
+    res.json({ success: true, result: comment });
+  });
+};
+
+// Middleware
+// Errors: Error404 Error500
+exports.MW_getPostByID = function (req, res, next) {
+  // find Book
+  Post.findById(req.params.id).exec((err, post) => {
+    if (err) {
+      logger.logError("Error in Get Post by ID", err);
+      return res.status(500).json({ success: false, msg: err.message });
+    }
+
+    if (post == null) {
+      return res.status(404).json({ success: false, msg: "Cannot find Post" });
+    }
+
+    req.post = post;
+    next();
+  });
 };

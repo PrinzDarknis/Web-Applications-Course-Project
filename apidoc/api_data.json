@@ -67,7 +67,7 @@
             "group": "Success 200",
             "type": "String",
             "optional": false,
-            "field": "result.id",
+            "field": "result._id",
             "description": "<p>ID of the Post.</p>"
           },
           {
@@ -110,7 +110,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"result\": [\n     {\n       \"id\": \"10A46...\",\n       \"title\": \"Post Title\",\n       \"text\": \"some text.\",\n       \"author\": \"854964141SHZ...\",\n       \"postDate\": \"15.12.2020 15:25:56\",\n       \"image\": \"true\",\n       \"comments\": [\n         {\n           \"author\": \"20A47\",\n           \"text\": \"nice Post\",\n           \"date\": \"15.12.2020 15:35:56\"\n         }\n       ]\n     }\n  ]\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"result\": [\n     {\n       \"_id\": \"10A46...\",\n       \"title\": \"Post Title\",\n       \"text\": \"some text.\",\n       \"author\": \"854964141SHZ...\",\n       \"postDate\": \"15.12.2020 15:25:56\",\n       \"image\": \"true\",\n       \"comments\": [\n         {\n           \"author\": \"20A47\",\n           \"text\": \"nice Post\",\n           \"date\": \"15.12.2020 15:35:56\"\n         }\n       ]\n     }\n  ]\n}",
           "type": "json"
         }
       ]
@@ -350,7 +350,7 @@
             "group": "Success 200",
             "type": "String",
             "optional": false,
-            "field": "result.id",
+            "field": "result._id",
             "description": "<p>ID of the Post.</p>"
           },
           {
@@ -393,7 +393,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"result\": [\n     {\n       \"id\": \"10A46\",\n       \"title\": \"Post Title\",\n       \"text\": \"some text.\",\n       \"author\": \"854964141SHZ...\",\n       \"postDate\": \"15.12.2020 15:25:56\",\n       \"image\": \"true\"\n     }\n  ]\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"result\": [\n     {\n       \"_id\": \"10A46\",\n       \"title\": \"Post Title\",\n       \"text\": \"some text.\",\n       \"author\": \"854964141SHZ...\",\n       \"postDate\": \"15.12.2020 15:25:56\",\n       \"image\": \"true\"\n     }\n  ]\n}",
           "type": "json"
         }
       ]
@@ -476,6 +476,13 @@
             "optional": false,
             "field": "id",
             "description": "<p>Posts unique ID.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "text",
+            "description": "<p>Comment text.</p>"
           }
         ]
       }
@@ -691,7 +698,7 @@
             "group": "Success 200",
             "type": "String",
             "optional": false,
-            "field": "result.id",
+            "field": "result._id",
             "description": "<p>ID of the Post.</p>"
           },
           {
@@ -734,7 +741,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"result\": [\n     {\n       \"id\": \"10A46...\",\n       \"title\": \"Post Title\",\n       \"text\": \"some text.\",\n       \"author\": \"854964141SHZ...\",\n       \"postDate\": \"15.12.2020 15:25:56\",\n       \"image\": \"true\",\n       \"comments\": [\n         {\n           \"author\": \"20A47\",\n           \"text\": \"nice Post\",\n           \"date\": \"15.12.2020 15:35:56\"\n         }\n       ]\n     }\n  ]\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"result\": [\n     {\n       \"_id\": \"10A46...\",\n       \"title\": \"Post Title\",\n       \"text\": \"some text.\",\n       \"author\": \"854964141SHZ...\",\n       \"postDate\": \"15.12.2020 15:25:56\",\n       \"image\": \"true\",\n       \"comments\": [\n         {\n           \"author\": \"20A47\",\n           \"text\": \"nice Post\",\n           \"date\": \"15.12.2020 15:35:56\"\n         }\n       ]\n     }\n  ]\n}",
           "type": "json"
         }
       ]

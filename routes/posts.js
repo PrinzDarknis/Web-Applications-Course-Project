@@ -87,7 +87,7 @@ const { logError } = require("../logger");
 
 /**
  * @apiDefine apiSuccess_PostAsResult
- * @apiSuccess {String} result.id ID of the Post.
+ * @apiSuccess {String} result._id ID of the Post.
  * @apiSuccess {String} result.title Title of the Post.
  * @apiSuccess {String} result.text Text of the Post.
  * @apiSuccess {String} result.author Author of the Post.
@@ -141,7 +141,7 @@ const router = express.Router();
  *       "success": true,
  *       "result": [
  *          {
- *            "id": "10A46",
+ *            "_id": "10A46",
  *            "title": "Post Title",
  *            "text": "some text.",
  *            "author": "854964141SHZ...",
@@ -193,7 +193,7 @@ router.get(
  *       "success": true,
  *       "result": [
  *          {
- *            "id": "10A46...",
+ *            "_id": "10A46...",
  *            "title": "Post Title",
  *            "text": "some text.",
  *            "author": "854964141SHZ...",
@@ -222,22 +222,7 @@ router.post(
     check("text").trim().isString().isLength({ min: 3 }),
     passport.authenticate("jwt", { session: false }),
   ],
-  (req, res) => {
-    let post = new Post({
-      title: req.body.title,
-      text: req.body.text,
-      author: req.user._id,
-    });
-
-    post.save((err, newPost) => {
-      if (err) {
-        logError("Error while write Post", err);
-        return res.status(500).json({ success: false, msg: err.message });
-      }
-
-      res.json({ success: true, result: newPost });
-    });
-  }
+  postsController.writePost
 );
 
 /**
@@ -263,7 +248,7 @@ router.post(
  *       "success": true,
  *       "result": [
  *          {
- *            "id": "10A46...",
+ *            "_id": "10A46...",
  *            "title": "Post Title",
  *            "text": "some text.",
  *            "author": "854964141SHZ...",
@@ -330,6 +315,7 @@ router.get(
  * @apiPermission registered
  *
  * @apiParam {Number} id Posts unique ID.
+ * @apiParam {String} text Comment text.
  *
  * @apiUse apiSuccess_success
  * @apiSuccess {Object} result The Comment.
@@ -359,9 +345,9 @@ router.post(
   "/:id/comment",
   [
     passport.authenticate("jwt", { session: false }),
-    checkID,
-    usersController.MW_getUserByID,
     usersController.MW_checkPrivacy,
+    checkID,
+    postsController.MW_getPostByID,
     check("text").trim().isString().isLength({ min: 1 }),
     checkValidate,
   ],
