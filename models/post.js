@@ -94,7 +94,7 @@ PostSchema.static(
     if (author) {
       logger.logDebug("getPosts, filter: only from author");
       try {
-        filter._id = mongoose.Types.ObjectId(author); // aggregate needs Object and not String
+        filter["author._id"] = mongoose.Types.ObjectId(author); // aggregate needs Object and not String
       } catch {
         // Invalide ObjectID
         callback(null, []); // no Results
