@@ -1271,6 +1271,12 @@
           {
             "group": "Error 4xx",
             "optional": false,
+            "field": "Unauthorized",
+            "description": "<p>needs valide JWT</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
             "field": "UsernameTaken",
             "description": "<p>The Username is already taken.</p>"
           }
@@ -1288,6 +1294,11 @@
         {
           "title": "InvalideParams:",
           "content": "HTTP/1.1 400 Bad Request\n{\n  \"success\": false,\n  \"msg\": \"Invalide input\",\n  \"error\": [\n     {\n       \"value\": \"invalide Value\",\n       \"msg\": \"what is wrong\",\n       \"param\": \"parameter Name\",\n       \"location\": \"parameter location\"\n     }\n  ]\n}",
+          "type": "json"
+        },
+        {
+          "title": "Unauthorized:",
+          "content": "HTTP/1.1 401 Unauthorized",
           "type": "json"
         },
         {

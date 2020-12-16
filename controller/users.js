@@ -91,10 +91,13 @@ exports.profile = function (req, res) {
 exports.changeUser = function (req, res, next) {
   // Him self?
   if (!req.targetUser._id.equals(req.user._id)) {
+    logger.logDebug(
+      `User ${req.user.username} tryed to change ${req.targetUser.username}`
+    );
     return res.sendStatus(401);
   }
 
-  let afterUsername = (err = null, taken = false) => {
+  let afterUsername = (err = null, taken = true) => {
     if (err) {
       logger.logError("Error while check Username taken in changeUser", err);
       return res.status(500).json({ success: false, msg: err.message });
@@ -121,7 +124,7 @@ exports.changeUser = function (req, res, next) {
         return res.status(500).json({ success: false, msg: err.message });
       }
 
-      res.json({});
+      res.json({ success: true, result: newUser.getTransmitObjet() });
     };
 
     if (req.body.password) req.user.hashAndSave(afterSave);
@@ -131,7 +134,7 @@ exports.changeUser = function (req, res, next) {
   // Username
   if (req.body.username) {
     User.isUsernameTaken(req.body.username, afterUsername);
-  }
+  } else afterUsername();
 };
 
 // askFriend
