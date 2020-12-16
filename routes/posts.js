@@ -387,9 +387,9 @@ router.post(
   "/:id/comment",
   [
     passport.authenticate("jwt", { session: false }),
-    usersController.MW_checkPrivacyForPost,
     checkID,
     postsController.MW_getPostByID,
+    usersController.MW_checkPrivacyForPost,
     check("text").trim().isString().isLength({ min: 1 }),
     checkValidate,
   ],
