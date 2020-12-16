@@ -213,7 +213,43 @@ exports.MW_getUserByID = function (req, res, next) {
 };
 
 // Errors: ErrorPrivacy Error500
-exports.MW_checkPrivacy = function (req, res, next) {
-  // TODO MW_checkPrivacy
-  next();
+exports.MW_checkPrivacyForPost = function (req, res, next) {
+  User.findById(req.post.author).exec((err, author) => {
+    if (err) {
+      logger.logError("Error in checkPrivacyForPost at get Author", err);
+      return res.status(500).json({ success: false, msg: err.message });
+    }
+
+    // Check
+    let allowed = false;
+    switch (author.privacy) {
+      case "private":
+        if (req.user) allowed = author._id.equals(req.user._id);
+        break;
+      case "friends":
+        if (req.user)
+          allowed =
+            author._id.equals(req.user._id) ||
+            author.friends.includes(req.user._id);
+        break;
+      case "registered":
+        if (req.user) allowed = true; // not allowed = req.user because user is object
+        break;
+      case "everyone":
+      default:
+        allowed = true;
+        break;
+    }
+
+    // evaluate
+    if (!allowed) {
+      return res.status(401).json({
+        success: false,
+        msg:
+          "Following the Posts privacy you are not allowed to fetch the Data",
+      });
+    }
+
+    next();
+  });
 };

@@ -178,7 +178,7 @@ define({ "api": [
         },
         {
           "title": "Unauthorized:",
-          "content": "HTTP/1.1 401 Unauthorized",
+          "content": "HTTP/1.1 401 Unauthorized\n{\n  \"success\": false,\n  \"msg\": \"Following the Posts privacy you are not allowed to fetch the Data\"\n}",
           "type": "json"
         },
         {
@@ -284,7 +284,7 @@ define({ "api": [
         },
         {
           "title": "Unauthorized:",
-          "content": "HTTP/1.1 401 Unauthorized",
+          "content": "HTTP/1.1 401 Unauthorized\n{\n  \"success\": false,\n  \"msg\": \"Following the Posts privacy you are not allowed to fetch the Data\"\n}",
           "type": "json"
         },
         {
@@ -611,7 +611,7 @@ define({ "api": [
         },
         {
           "title": "Unauthorized:",
-          "content": "HTTP/1.1 401 Unauthorized",
+          "content": "HTTP/1.1 401 Unauthorized\n{\n  \"success\": false,\n  \"msg\": \"Following the Posts privacy you are not allowed to fetch the Data\"\n}",
           "type": "json"
         },
         {
@@ -829,7 +829,7 @@ define({ "api": [
         },
         {
           "title": "Unauthorized:",
-          "content": "HTTP/1.1 401 Unauthorized",
+          "content": "HTTP/1.1 401 Unauthorized\n{\n  \"success\": false,\n  \"msg\": \"Following the Posts privacy you are not allowed to fetch the Data\"\n}",
           "type": "json"
         },
         {

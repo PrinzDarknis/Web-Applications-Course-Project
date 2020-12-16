@@ -65,8 +65,12 @@ const { logError } = require("../logger");
 /**
  * @apiDefine ErrorPrivacy
  * @apiError Unauthorized Following the Posts privacy you are not allowed to fetch the Data.
- * @apiErrorExample Unauthorized:
+ * @apiErrorExample {json} Unauthorized:
  *     HTTP/1.1 401 Unauthorized
+ *     {
+ *       "success": false,
+ *       "msg": "Following the Posts privacy you are not allowed to fetch the Data"
+ *     }
  */
 
 /**
@@ -274,7 +278,7 @@ router.post(
  */
 router.get(
   "/:id",
-  [authenticateOptional, usersController.MW_checkPrivacy, checkID],
+  [authenticateOptional, usersController.MW_checkPrivacyForPost, checkID],
   postsController.getPost
 );
 
@@ -303,7 +307,7 @@ router.get(
     check("size").trim().isIn(["normal", "small"]).optional().default("normal"),
     checkValidate,
     authenticateOptional,
-    usersController.MW_checkPrivacy,
+    usersController.MW_checkPrivacyForPost,
     checkID,
   ],
   postsController.getImage
@@ -350,7 +354,7 @@ router.post(
   "/:id/comment",
   [
     passport.authenticate("jwt", { session: false }),
-    usersController.MW_checkPrivacy,
+    usersController.MW_checkPrivacyForPost,
     checkID,
     postsController.MW_getPostByID,
     check("text").trim().isString().isLength({ min: 1 }),
