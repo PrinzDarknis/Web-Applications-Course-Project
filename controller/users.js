@@ -26,7 +26,7 @@ exports.register = function (req, res) {
       password: req.body.password,
     });
 
-    newUser.hashAndCreate((err, user) => {
+    newUser.hashAndSave((err, user) => {
       if (err) {
         logger.logError("Error while Register", err);
         return res
@@ -85,6 +85,48 @@ exports.profile = function (req, res) {
       !req.targetUser.friends.includes(req.user._id));
 
   res.json({ success: true, result: req.targetUser.getTransmitObjet(privacy) });
+};
+
+// Change User
+exports.changeUser = function (req, res, next) {
+  let afterUsername = (err = null, taken = false) => {
+    if (err) {
+      logger.logError("Error while check Username taken in changeUser", err);
+      return res.status(500).json({ success: false, msg: err.message });
+    }
+
+    if (!taken) {
+      req.user.username = req.body.username;
+    }
+
+    // Password
+    if (req.body.password) {
+      req.user.password = req.body.password;
+    }
+
+    // Privacy
+    if (req.body.privacy) {
+      req.user.privacy = req.body.privacy;
+    }
+
+    // Save
+    let afterSave = (err, newUser) => {
+      if (err) {
+        logger.logError("Error while change User Data", err);
+        return res.status(500).json({ success: false, msg: err.message });
+      }
+
+      res.json({});
+    };
+
+    if (req.body.password) req.user.hashAndSave(afterSave);
+    else req.user.save(afterSave);
+  };
+
+  // Username
+  if (req.body.username) {
+    User.isUsernameTaken(req.body.username, afterUsername);
+  }
 };
 
 // askFriend

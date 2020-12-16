@@ -59,6 +59,17 @@ const {
  */
 
 /**
+ * @apiDefine ErrorUsernameTaken
+ * @apiError UsernameTaken The Username is already taken.
+ * @apiErrorExample {json} UsernameTaken:
+ *     HTTP/1.1 409 Conflict
+ *     {
+ *       "success": false,
+ *       "msg": "Username is taken"
+ *     }
+ */
+
+/**
  * @apiDefine Error500
  * @apiError (Error 5xx) ServerError Something happened on the Server Side
  * @apiErrorExample {json} ServerError:
@@ -103,7 +114,7 @@ const router = express.Router();
  *     }
  *
  * @apiUse apiSuccess_success
- * @apiUse apiSuccess_UserAsResult
+ * @apiSuccess {String} msg <code>"User registered"</code>
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
@@ -113,13 +124,7 @@ const router = express.Router();
  *     }
  *
  * @apiUse ErrorParams
- * @apiError UsernameTaken The Username is already taken.
- * @apiErrorExample {json} UsernameTaken:
- *     HTTP/1.1 409 Conflict
- *     {
- *       "success": false,
- *       "msg": "Username is taken"
- *     }
+ * @apiUse ErrorUsernameTaken
  * @apiUse Error500
  */
 router.post(
@@ -236,6 +241,71 @@ router.get(
   "/:id",
   [checkID, usersController.MW_getUserByID, authenticateOptional],
   usersController.profile
+);
+
+/**
+ * @api {post} /api/users/:id Change User Data
+ * @apiName ChangeUser
+ * @apiGroup User
+ *
+ * @apiParam {String{3..}} username new Username.
+ * @apiParam {String{3..}} password new Password.
+ * @apiParam {String="everyone", "registered", "friends", "private"} privacy  new Privacy configuration.
+ *
+ * @apiParamExample {json} Request-Example:
+ *     {
+ *        "username": "john",
+ *        "password": "123456"
+ *     }
+ *
+ * @apiUse apiSuccess_success
+ * @apiUse apiSuccess_UserAsResult
+ *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "success": true,
+ *       "result": {
+ *          "id": "10A46",
+ *          "name": "John Doe",
+ *          "username": "John_Doe",
+ *          "email": "John@Doe.de",
+ *          "privacy": "everyone",
+ *          "friends": [ "Max" ],
+ *          "friendsAsked": [ "Maria", "Yui" ]
+ *       }
+ *     }
+ *
+ * @apiUse ErrorParams
+ * @apiUse ErrorUsernameTaken
+ * @apiUse Error500
+ */
+router.post(
+  "/:id",
+  [
+    passport.authenticate("jwt", { session: false }),
+    checkID,
+    usersController.MW_getUserByID,
+    check("username", "min. length 3")
+      .trim()
+      .isString()
+      .isLength({ min: 3 })
+      .optional(),
+    check("password", "min. length 3")
+      .trim()
+      .isString()
+      .isLength({ min: 3 })
+      .optional(),
+    check(
+      "privacy",
+      'invalide Value, allowed: "everyone", "registered", "friends" or "private"'
+    )
+      .trim()
+      .isIn(["everyone", "registered", "friends", "private"])
+      .optional(),
+    checkValidate,
+  ],
+  usersController.changeUser
 );
 
 /**

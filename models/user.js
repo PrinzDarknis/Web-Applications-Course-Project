@@ -49,7 +49,7 @@ UserSchema.static("isUsernameTaken", function (username, callback) {
   });
 });
 
-UserSchema.method("hashAndCreate", function (callback) {
+UserSchema.method("hashAndSave", function (callback) {
   bycrypt.genSalt(10, (err, salt) => {
     bycrypt.hash(this.password, salt, (err, hash) => {
       if (err) throw err;
