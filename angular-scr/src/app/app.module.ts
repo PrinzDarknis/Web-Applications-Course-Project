@@ -18,6 +18,7 @@ import { PostService } from './services/post.service';
 import { AuthGuard } from './guards/auth.guard';
 import { PostsComponent } from './components/posts/posts.component';
 import { NewPostComponent } from './components/new-post/new-post.component';
+import { PostComponent } from './components/post/post.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { NewPostComponent } from './components/new-post/new-post.component';
     RegisterComponent,
     PostsComponent,
     NewPostComponent,
+    PostComponent,
   ],
   imports: [
     BrowserModule,

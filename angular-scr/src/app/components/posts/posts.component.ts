@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { Post } from 'src/app/models';
 
 import { PostService } from '../../services/post.service';
@@ -12,8 +13,9 @@ export class PostsComponent implements OnInit {
   @Input() author?: string;
 
   posts: Post[];
+  isAuthor: boolean = false;
 
-  constructor(private postService: PostService) {}
+  constructor(private postService: PostService, private router: Router) {}
 
   ngOnInit(): void {
     let cb = (response) => {
@@ -23,10 +25,18 @@ export class PostsComponent implements OnInit {
 
     if (this.author) {
       // only his Posts
+      this.isAuthor = true;
       this.postService.getAuthorPosts(this.author).subscribe(cb);
     } else {
       // all Posts
+      this.isAuthor = false;
       this.postService.getPosts().subscribe(cb);
     }
+  }
+
+  openPost(id: string, index: number) {
+    this.postService.selectPost(index, this.isAuthor);
+
+    this.router.navigate([`posts/${id}`]);
   }
 }

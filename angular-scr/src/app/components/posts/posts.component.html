@@ -1,9 +1,7 @@
 <div *ngIf="posts" class="row">
-  <fieldset *ngFor="let post of posts" class="infobox col-md-6">
+  <fieldset *ngFor="let post of posts; index as i" class="infobox col-md-6">
     <legend>
-      <a class="deco-none" routerLink="/posts/{{ post._id }}">{{
-        post.title
-      }}</a>
+      <a class="deco-none" (click)="openPost(post._id, i)">{{ post.title }}</a>
     </legend>
     <ul class="list-group">
       <li class="list-group-item" routerLink="/user/{{ post.author._id }}">

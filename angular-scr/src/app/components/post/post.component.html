@@ -1,0 +1,49 @@
+<div *ngIf="post">
+  <h2 class="page-header">{{ post.title }}</h2>
+  by
+  <a routerLink="/user/{{ post.author._id }}">{{ post.author.username }}</a>
+  <br />
+  <img
+    src="https://images-na.ssl-images-amazon.com/images/I/51JQCS5ZvhL._SX383_BO1,204,203,200_.jpg"
+    alt="Post Image"
+  />
+  <br />
+  <h5>
+    <div>{{ post.text }}</div>
+
+    <br /><br />
+    <!-- Write Comments -->
+    <div *ngIf="userService.loggedIn()">
+      <fieldset>
+        <legend>Write a Comment</legend>
+        <div class="form-group">
+          <textarea
+            cols="30"
+            rows="5"
+            maxlength="150"
+            class="form-control"
+            [(ngModel)]="commentText"
+            name="commentText"
+          ></textarea>
+        </div>
+        <span
+          _ngcontent-toe-c33=""
+          type="submit"
+          class="badge btn-primary"
+          (click)="writeComment()"
+        >
+          Post
+        </span>
+      </fieldset>
+    </div>
+
+    <!-- Comments -->
+    <ul class="list-group">
+      <li *ngFor="let comment of post.comments" class="list-group-item">
+        {{ comment.author }}
+        <br />
+        {{ comment.text }}
+      </li>
+    </ul>
+  </h5>
+</div>
