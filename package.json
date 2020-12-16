@@ -8,7 +8,7 @@
     "start": "node app",
     "build-frontend": "cd angular-src && npm run build-prod",
     "dev": "nodemon app",
-    "genApiDoc": "apidoc -o apidoc/ -e apidoc  -e node_modules"
+    "genApiDoc": "apidoc -o apidoc/ -e apidoc  -e node_modules -e angular-scr"
   },
   "repository": {
     "type": "git",

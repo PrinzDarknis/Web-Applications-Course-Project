@@ -131,7 +131,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"result\": [\n     {\n       \"_id\": \"10A46...\",\n       \"title\": \"Post Title\",\n       \"text\": \"some text.\",\n       \"author\": {\n         \"_id\": \"5fda15344d46c345a00306ce\",\n         \"username\": \"john\"\n       },\n       \"postDate\": \"15.12.2020 15:25:56\",\n       \"image\": \"true\",\n       \"comments\": [\n         {\n           \"_id\": \"HGTZJN5663\",\n           \"author\": \"20A47\",\n           \"text\": \"nice Post\",\n           \"date\": \"15.12.2020 15:35:56\"\n         }\n       ]\n     }\n  ]\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"result\": {\n     \"_id\": \"10A46...\",\n     \"title\": \"Post Title\",\n     \"text\": \"some text.\",\n     \"author\": {\n       \"_id\": \"5fda15344d46c345a00306ce\",\n       \"username\": \"john\"\n     },\n     \"postDate\": \"15.12.2020 15:25:56\",\n     \"image\": \"true\",\n     \"comments\": [\n       {\n         \"_id\": \"HGTZJN5663\",\n         \"author\": \"20A47\",\n         \"text\": \"nice Post\",\n         \"date\": \"15.12.2020 15:35:56\"\n       }\n     ]\n   }\n}",
           "type": "json"
         }
       ]

@@ -278,27 +278,25 @@ router.post(
  *     HTTP/1.1 200 OK
  *     {
  *       "success": true,
- *       "result": [
- *          {
- *            "_id": "10A46...",
- *            "title": "Post Title",
- *            "text": "some text.",
- *            "author": {
- *              "_id": "5fda15344d46c345a00306ce",
- *              "username": "john"
- *            },
- *            "postDate": "15.12.2020 15:25:56",
- *            "image": "true",
- *            "comments": [
- *              {
- *                "_id": "HGTZJN5663",
- *                "author": "20A47",
- *                "text": "nice Post",
- *                "date": "15.12.2020 15:35:56"
- *              }
- *            ]
- *          }
- *       ]
+ *       "result": {
+ *          "_id": "10A46...",
+ *          "title": "Post Title",
+ *          "text": "some text.",
+ *          "author": {
+ *            "_id": "5fda15344d46c345a00306ce",
+ *            "username": "john"
+ *          },
+ *          "postDate": "15.12.2020 15:25:56",
+ *          "image": "true",
+ *          "comments": [
+ *            {
+ *              "_id": "HGTZJN5663",
+ *              "author": "20A47",
+ *              "text": "nice Post",
+ *              "date": "15.12.2020 15:35:56"
+ *            }
+ *          ]
+ *        }
  *     }
  *
  * @apiUse ErrorID
