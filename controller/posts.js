@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 
 const logger = require("../logger");
 const Post = require("../models/post");
+const User = require("../models/user");
 
 // Get List of Posts
 // Params: newer, older, max, author
@@ -11,7 +12,7 @@ exports.getPosts = function (req, res) {
     req.user,
     req.query.newer,
     req.query.older,
-    req.query.max,
+    req.query.max || 20,
     req.query.author,
     (err, posts) => {
       if (err) {
@@ -26,7 +27,21 @@ exports.getPosts = function (req, res) {
 
 // Get Single Post
 exports.getPost = function (req, res) {
-  res.json({ success: true, result: req.post });
+  User.findById(req.post.author, (err, author) => {
+    if (err) {
+      logger.logError("Error in getPost while find Author", err);
+      return res.status(500).json({ success: false, msg: err.message });
+    }
+
+    // insert Author Object
+    let post = req.post.toObject();
+    post.author = {
+      _id: author._id,
+      username: author.username,
+    };
+
+    res.json({ success: true, result: post });
+  });
 };
 
 exports.getImage = function (req, res) {

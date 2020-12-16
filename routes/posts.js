@@ -8,6 +8,7 @@ const {
   checkValidate,
   checkID,
   authenticateOptional,
+  validateIsDate,
 } = require("../middleware");
 
 const Post = require("../models/post");
@@ -100,6 +101,18 @@ const { logError } = require("../logger");
  */
 
 /**
+ * @apiDefine apiSuccess_PostAsResult_Authorobject
+ * @apiSuccess {String} result._id ID of the Post.
+ * @apiSuccess {String} result.title Title of the Post.
+ * @apiSuccess {String} result.text Text of the Post.
+ * @apiSuccess {Object} result.author Author of the Post.
+ * @apiSuccess {String} result.author._id <code>if</code> of the Author.
+ * @apiSuccess {String} result.author.username Username of the Author.
+ * @apiSuccess {Date} result.postDate Creation Date of the Post.
+ * @apiSuccess {Boolean} result.image Has the Post an Image?
+ */
+
+/**
  * @apiDefine autorization_optional
  * @apiHeader (Optional Headers) {String} Authorization Authorization via JWT.
  * @apiHeaderExample {json} Header-Example:
@@ -138,7 +151,7 @@ const router = express.Router();
  *
  * @apiUse apiSuccess_success
  * @apiSuccess {Object[]} result Array of Posts.
- * @apiUse apiSuccess_PostAsResult
+ * @apiUse apiSuccess_PostAsResult_Authorobject
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
@@ -149,7 +162,10 @@ const router = express.Router();
  *            "_id": "10A46",
  *            "title": "Post Title",
  *            "text": "some text.",
- *            "author": "854964141SHZ...",
+ *            "author": {
+ *              "_id": "5fda15344d46c345a00306ce",
+ *              "username": "john"
+ *            },
  *            "postDate": "15.12.2020 15:25:56",
  *            "image": "true"
  *          }
@@ -162,8 +178,18 @@ const router = express.Router();
 router.get(
   "/",
   [
-    check("newer").trim().isDate().toDate().optional(),
-    check("older").trim().isDate().toDate().optional(),
+    check("newer", "needs to be an valide Date")
+      .trim()
+      //.isDate() // doesn't work properly
+      .custom(validateIsDate)
+      .toDate()
+      .optional(),
+    check("older")
+      .trim()
+      //.isDate() // doesn't work properly
+      .custom(validateIsDate)
+      .toDate()
+      .optional(),
     check("max").trim().isInt().toInt().optional(),
     check("author").trim().isString().isLength({ min: 1 }).optional(),
     checkValidate,
@@ -241,7 +267,7 @@ router.post(
  *
  * @apiUse apiSuccess_success
  * @apiSuccess {Object[]} result Array of Posts.
- * @apiUse apiSuccess_PostAsResult
+ * @apiUse apiSuccess_PostAsResult_Authorobject
  * @apiSuccess {Object[]} result.comments Array of Comments.
  * @apiSuccess {String} result.comments.id <code>id</code> of the Comment.
  * @apiSuccess {String} result.comments.author ID of the Author of the Comment.
@@ -257,7 +283,10 @@ router.post(
  *            "_id": "10A46...",
  *            "title": "Post Title",
  *            "text": "some text.",
- *            "author": "854964141SHZ...",
+ *            "author": {
+ *              "_id": "5fda15344d46c345a00306ce",
+ *              "username": "john"
+ *            },
  *            "postDate": "15.12.2020 15:25:56",
  *            "image": "true",
  *            "comments": [
@@ -309,7 +338,7 @@ router.get(
 router.get(
   "/:id/image",
   [
-    check("size").trim().isIn(["normal", "small"]).optional().default("normal"),
+    check("size").trim().isIn(["normal", "small"]).optional(),
     checkValidate,
     authenticateOptional,
     checkID,

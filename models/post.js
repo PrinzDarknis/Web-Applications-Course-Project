@@ -55,7 +55,7 @@ PostSchema.static(
   function (user, newer, older, max, author, callback) {
     let filter = {};
 
-    // TODO Privacy
+    // Privacy
     if (user) {
       // Registered
       logger.logDebug("getPosts, filter: advanced");
@@ -101,6 +101,21 @@ PostSchema.static(
       }
     }
 
+    // newer
+    if (newer) {
+      filter.postDate = { $gt: newer };
+    }
+
+    // older
+    if (older) {
+      filter.postDate = { $lt: older };
+    }
+
+    // max
+    let limit = {
+      $limit: max,
+    };
+
     // Search
     Post.aggregate([
       substituteAuthorIdWithAuthor,
@@ -110,6 +125,8 @@ PostSchema.static(
         $match: filter,
       },
       FilterOutputFields,
+      orderByPostDate,
+      limit,
     ]).exec(callback);
   }
 );
@@ -146,5 +163,11 @@ const FilterOutputFields = {
     comments: 0,
     "author.privacy": 0,
     "author.friends": 0,
+  },
+};
+
+const orderByPostDate = {
+  $sort: {
+    postDate: -1, // newest first
   },
 };

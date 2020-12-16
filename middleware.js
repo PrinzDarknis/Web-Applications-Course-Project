@@ -44,3 +44,8 @@ module.exports.authenticateOptional = function (req, res, next) {
     next();
   })(req, res, next);
 };
+
+// isDate of express validator doesn't work (false id value is "2020-12-16T14:25:51.722Z")
+module.exports.validateIsDate = function (value) {
+  return !isNaN(Date.parse(value));
+};

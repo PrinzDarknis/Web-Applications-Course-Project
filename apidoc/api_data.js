@@ -93,10 +93,24 @@ define({ "api": [
           },
           {
             "group": "Success 200",
-            "type": "String",
+            "type": "Object",
             "optional": false,
             "field": "result.author",
             "description": "<p>Author of the Post.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.author._id",
+            "description": "<p><code>if</code> of the Author.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.author.username",
+            "description": "<p>Username of the Author.</p>"
           },
           {
             "group": "Success 200",
@@ -117,7 +131,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"result\": [\n     {\n       \"_id\": \"10A46...\",\n       \"title\": \"Post Title\",\n       \"text\": \"some text.\",\n       \"author\": \"854964141SHZ...\",\n       \"postDate\": \"15.12.2020 15:25:56\",\n       \"image\": \"true\",\n       \"comments\": [\n         {\n           \"_id\": \"HGTZJN5663\",\n           \"author\": \"20A47\",\n           \"text\": \"nice Post\",\n           \"date\": \"15.12.2020 15:35:56\"\n         }\n       ]\n     }\n  ]\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"result\": [\n     {\n       \"_id\": \"10A46...\",\n       \"title\": \"Post Title\",\n       \"text\": \"some text.\",\n       \"author\": {\n         \"_id\": \"5fda15344d46c345a00306ce\",\n         \"username\": \"john\"\n       },\n       \"postDate\": \"15.12.2020 15:25:56\",\n       \"image\": \"true\",\n       \"comments\": [\n         {\n           \"_id\": \"HGTZJN5663\",\n           \"author\": \"20A47\",\n           \"text\": \"nice Post\",\n           \"date\": \"15.12.2020 15:35:56\"\n         }\n       ]\n     }\n  ]\n}",
           "type": "json"
         }
       ]
@@ -377,10 +391,24 @@ define({ "api": [
           },
           {
             "group": "Success 200",
-            "type": "String",
+            "type": "Object",
             "optional": false,
             "field": "result.author",
             "description": "<p>Author of the Post.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.author._id",
+            "description": "<p><code>if</code> of the Author.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.author.username",
+            "description": "<p>Username of the Author.</p>"
           },
           {
             "group": "Success 200",
@@ -401,7 +429,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"result\": [\n     {\n       \"_id\": \"10A46\",\n       \"title\": \"Post Title\",\n       \"text\": \"some text.\",\n       \"author\": \"854964141SHZ...\",\n       \"postDate\": \"15.12.2020 15:25:56\",\n       \"image\": \"true\"\n     }\n  ]\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"result\": [\n     {\n       \"_id\": \"10A46\",\n       \"title\": \"Post Title\",\n       \"text\": \"some text.\",\n       \"author\": {\n         \"_id\": \"5fda15344d46c345a00306ce\",\n         \"username\": \"john\"\n       },\n       \"postDate\": \"15.12.2020 15:25:56\",\n       \"image\": \"true\"\n     }\n  ]\n}",
           "type": "json"
         }
       ]
