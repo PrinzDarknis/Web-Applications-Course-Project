@@ -17,7 +17,7 @@ import { UserService } from './services/user.service';
 import { PostService } from './services/post.service';
 import { AuthGuard } from './guards/auth.guard';
 import { PostsComponent } from './components/posts/posts.component';
-import { NewPostsComponent } from './components/new-posts/new-posts.component';
+import { NewPostComponent } from './components/new-post/new-post.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +28,7 @@ import { NewPostsComponent } from './components/new-posts/new-posts.component';
     ProfileComponent,
     RegisterComponent,
     PostsComponent,
-    NewPostsComponent,
+    NewPostComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,16 @@
+.infobox {
+  margin-bottom: 5vh;
+}
+
+.deco-none {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.deco-none:hover {
+  text-decoration: underline;
+}
+
+.myImage {
+  text-align: center;
+}

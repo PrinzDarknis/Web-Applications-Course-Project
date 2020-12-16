@@ -1,1 +1,23 @@
-<p>posts works!</p>
+<div *ngIf="posts" class="row">
+  <fieldset *ngFor="let post of posts" class="infobox col-md-6">
+    <legend>
+      <a class="deco-none" routerLink="/posts/{{ post._id }}">{{
+        post.title
+      }}</a>
+    </legend>
+    <ul class="list-group">
+      <li class="list-group-item" routerLink="/user/{{ post.author._id }}">
+        Author: {{ post.author.username }}
+      </li>
+      <li class="list-group-item myImage">
+        <img
+          src="https://images-na.ssl-images-amazon.com/images/I/51JQCS5ZvhL._SX383_BO1,204,203,200_.jpg"
+          alt="Post Image"
+        />
+      </li>
+      <li class="list-group-item">
+        {{ post.text }}
+      </li>
+    </ul>
+  </fieldset>
+</div>

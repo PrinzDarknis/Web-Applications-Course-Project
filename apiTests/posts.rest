@@ -29,7 +29,7 @@ Content-Type: application/json
 GET http://localhost/api/posts
 
 ### Get Posts: Author
-GET http://localhost/api/posts?author=5fda190e4d46c345a00306d5
+GET http://localhost/api/posts?author=5fda15344d46c345a00306ce
 
 ### Get Posts: Registered
 GET http://localhost/api/posts

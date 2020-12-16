@@ -110,6 +110,7 @@ export class UserService {
 
   // Extract Body on Error
   private errorHandler(err) {
+    console.log(err);
     return of(err.error);
   }
 }
