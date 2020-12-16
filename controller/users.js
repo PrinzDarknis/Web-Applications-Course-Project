@@ -300,6 +300,9 @@ exports.MW_checkPrivacyForPost = function (req, res, next) {
       });
     }
 
+    logger.logDebug(
+      `MW_checkPrivacyForPost: Privacy ${author.privacy}: allowed: ${allowed}`
+    );
     next();
   });
 };

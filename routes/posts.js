@@ -278,7 +278,12 @@ router.post(
  */
 router.get(
   "/:id",
-  [authenticateOptional, usersController.MW_checkPrivacyForPost, checkID],
+  [
+    authenticateOptional,
+    checkID,
+    postsController.MW_getPostByID,
+    usersController.MW_checkPrivacyForPost,
+  ],
   postsController.getPost
 );
 
@@ -307,8 +312,9 @@ router.get(
     check("size").trim().isIn(["normal", "small"]).optional().default("normal"),
     checkValidate,
     authenticateOptional,
-    usersController.MW_checkPrivacyForPost,
     checkID,
+    postsController.MW_getPostByID,
+    usersController.MW_checkPrivacyForPost,
   ],
   postsController.getImage
 );
@@ -362,5 +368,10 @@ router.post(
   ],
   postsController.writeComment
 );
+
+//404
+router.get("*", (req, res) => {
+  res.sendStatus(404);
+});
 
 module.exports = router;

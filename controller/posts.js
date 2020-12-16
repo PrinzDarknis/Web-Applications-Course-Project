@@ -1,3 +1,4 @@
+const { json } = require("express");
 const mongoose = require("mongoose");
 
 const logger = require("../logger");
@@ -8,7 +9,7 @@ exports.getPosts = function (req, res) {
 };
 
 exports.getPost = function (req, res) {
-  // TODO
+  res.json({ success: true, result: req.post });
 };
 
 exports.getImage = function (req, res) {

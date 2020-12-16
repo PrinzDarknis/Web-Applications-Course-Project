@@ -1,0 +1,30 @@
+# John:         JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZGExNTE1NGQ0NmMzNDVhMDAzMDZjYyIsIm5hbWUiOiJKb2huIERvZSIsInVzZXJuYW1lIjoiam9obiIsImVtYWlsIjoiam9obkBtYWlsLmRlIiwicHJpdmFjeSI6ImV2ZXJ5b25lIiwiZnJpZW5kcyI6W10sImZyaWVuZHNBc2tlZCI6W10sImlhdCI6MTYwODEyODQ3MSwiZXhwIjoxNjA4NzMzMjcxfQ.W6B8F9zU3Bsx_q-o1YGaWF56lc1MiGIq4DteVEA_eJ4
+# Public:       JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZGExNTM0NGQ0NmMzNDVhMDAzMDZjZSIsIm5hbWUiOiJQdWJsaWMiLCJ1c2VybmFtZSI6InB1YmxpYyIsImVtYWlsIjoiam9obkBtYWlsLmRlIiwicHJpdmFjeSI6ImV2ZXJ5b25lIiwiZnJpZW5kcyI6W10sImZyaWVuZHNBc2tlZCI6W10sImlhdCI6MTYwODEyODQwOCwiZXhwIjoxNjA4NzMzMjA4fQ.o_5UJDzrYkalgFyzsLjxgr_ZIilO4U948iWbOTV_Bw4
+# Registered:   JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZGExNTQ0NGQ0NmMzNDVhMDAzMDZjZiIsIm5hbWUiOiJSZWdpc3RlcmVkIiwidXNlcm5hbWUiOiJyZWciLCJlbWFpbCI6ImpvaG5AbWFpbC5kZSIsInByaXZhY3kiOiJyZWdpc3RlcmVkIiwiZnJpZW5kcyI6W10sImZyaWVuZHNBc2tlZCI6W10sImlhdCI6MTYwODEyODM5MSwiZXhwIjoxNjA4NzMzMTkxfQ.Wm9weTJ52nTaSqiJ7mzapM4tnoQE89WX50nV9LLA6Dk
+# Friends:      JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZGExNTYxNGQ0NmMzNDVhMDAzMDZkMCIsIm5hbWUiOiJGcmllbmRzIiwidXNlcm5hbWUiOiJmcmllbmRzIiwiZW1haWwiOiJqb2huQG1haWwuZGUiLCJwcml2YWN5IjoiZnJpZW5kcyIsImZyaWVuZHMiOltdLCJmcmllbmRzQXNrZWQiOltdLCJpYXQiOjE2MDgxMjg0MjEsImV4cCI6MTYwODczMzIyMX0.cItfUai5sgLPbqB-nkce6FJqixby2aPT9kNzUutPnVg
+# Private:      JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZGExNTZmNGQ0NmMzNDVhMDAzMDZkMSIsIm5hbWUiOiJQcml2YXRlIiwidXNlcm5hbWUiOiJwcml2YXRlIiwiZW1haWwiOiJqb2huQG1haWwuZGUiLCJwcml2YWN5IjoicHJpdmF0ZSIsImZyaWVuZHMiOltdLCJmcmllbmRzQXNrZWQiOltdLCJpYXQiOjE2MDgxMjg0MzMsImV4cCI6MTYwODczMzIzM30.LBQaf1K3TY38NN1X1urS20l49xEQE5Xq_pbPngOkuaA
+
+# User:
+
+{"_id":{"$oid":"5fda15154d46c345a00306cc"},"privacy":"everyone","friends":["5fda15614d46c345a00306d0","5fda156f4d46c345a00306d1"],"friendsAsked":[],"name":"John Doe","email":"john@mail.de","username":"john","password":"$2a$10$PaLdk79Gfz5DPsa62PVYH.IPj5vNA3Cv2v1slhAgcfwtfv1/fTEK2","__v":{"$numberInt":"2"}}
+
+{"_id":{"$oid":"5fda15264d46c345a00306cd"},"privacy":"everyone","friends":[],"friendsAsked":[],"name":"Change","email":"john@mail.de","username":"change","password":"$2a$10$JWGd23ECrkPnvtBSp78gqel1V3Ny4vN3RodYaQiw33oxGp.BHRtRC","__v":{"$numberInt":"0"}}
+
+{"_id":{"$oid":"5fda15344d46c345a00306ce"},"privacy":"everyone","friends":[],"friendsAsked":[],"name":"Public","email":"john@mail.de","username":"public","password":"$2a$10$4Q4jh4idJ6Wu5WGc7CdL3OG3FUYUtPJDKdUPGSzoU0MjD49fK12LK","__v":{"$numberInt":"0"}}
+
+{"_id":{"$oid":"5fda15444d46c345a00306cf"},"privacy":"registered","friends":[],"friendsAsked":[],"name":"Registered","email":"john@mail.de","username":"reg","password":"$2a$10$TPHZGUm3FnSmcT43Tk.TjuchFylargQpdoOoE9I88eU1ZkATdcsAO","__v":{"$numberInt":"0"}}
+
+{"_id":{"$oid":"5fda15614d46c345a00306d0"},"privacy":"friends","friends":["5fda15154d46c345a00306cc"],"friendsAsked":[],"name":"Friends","email":"john@mail.de","username":"friends","password":"$2a$10$JfnNxwVA3AeDWSa/9BZ.6OBKCuHKip7jXLWrQWscTltNiGWkJcsKW","__v":{"$numberInt":"2"}}
+
+{"_id":{"$oid":"5fda156f4d46c345a00306d1"},"privacy":"private","friends":["5fda15154d46c345a00306cc"],"friendsAsked":[],"name":"Private","email":"john@mail.de","username":"private","password":"$2a$10$LV9q.uJ4oXO5XDrZh1xSi.v2p93ZRUaL0YPA7L0qGu6YRPQoFPlXW","__v":{"$numberInt":"2"}}
+
+# Posts:
+
+{"_id":{"$oid":"5fda18c24d46c345a00306d2"},"image":false,"title":"Private","text":"I'm a cat.","author":{"$oid":"5fda156f4d46c345a00306d1"},"postDate":{"$date":{"$numberLong":"1608128706810"}},"comments":[],"__v":{"$numberInt":"0"}}
+
+{"_id":{"$oid":"5fda18de4d46c345a00306d3"},"image":false,"title":"Friends","text":"I'm a cat.","author":{"$oid":"5fda15614d46c345a00306d0"},"postDate":{"$date":{"$numberLong":"1608128734184"}},"comments":[],"__v":{"$numberInt":"0"}}
+
+{"_id":{"$oid":"5fda18ef4d46c345a00306d4"},"image":false,"title":"Registered","text":"I'm a cat.","author":{"$oid":"5fda15444d46c345a00306cf"},"postDate":{"$date":{"$numberLong":"1608128751722"}},"comments":[],"__v":{"$numberInt":"0"}}
+
+{"_id":{"$oid":"5fda190e4d46c345a00306d5"},"image":false,"title":"Public","text":"I'm a cat.","author":{"$oid":"5fda15344d46c345a00306ce"},"postDate":{"$date":{"$numberLong":"1608128782522"}},"comments":[],"__v":{"$numberInt":"0"}}
+

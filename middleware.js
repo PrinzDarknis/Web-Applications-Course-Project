@@ -35,7 +35,11 @@ module.exports.authenticateOptional = function (req, res, next) {
     }
 
     req.user = user; // User or false
-    logDebug(user ? `User: ${user.username}` : "No Authent User");
+    logDebug(
+      user
+        ? `Authenticate Optional: User ${user.username}`
+        : "Authenticate Optional: No Authent User"
+    );
 
     next();
   })(req, res, next);
