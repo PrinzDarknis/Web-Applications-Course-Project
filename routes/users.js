@@ -277,6 +277,7 @@ router.get(
  *     }
  *
  * @apiUse ErrorParams
+ * @apiUse ErrorUnauthorized
  * @apiUse ErrorUsernameTaken
  * @apiUse Error500
  */

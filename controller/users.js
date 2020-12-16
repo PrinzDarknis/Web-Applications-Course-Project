@@ -89,6 +89,11 @@ exports.profile = function (req, res) {
 
 // Change User
 exports.changeUser = function (req, res, next) {
+  // Him self?
+  if (!req.targetUser._id.equals(req.user._id)) {
+    return res.sendStatus(401);
+  }
+
   let afterUsername = (err = null, taken = false) => {
     if (err) {
       logger.logError("Error while check Username taken in changeUser", err);
