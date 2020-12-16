@@ -22,6 +22,30 @@ Content-Type: application/json
     "text": "Neko"
 }
 
+
+
+
+### Get Posts
+GET http://localhost/api/posts
+
+### Get Posts: Author
+GET http://localhost/api/posts?author=5fda190e4d46c345a00306d5
+
+### Get Posts: Registered
+GET http://localhost/api/posts
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZGExNTM0NGQ0NmMzNDVhMDAzMDZjZSIsIm5hbWUiOiJQdWJsaWMiLCJ1c2VybmFtZSI6InB1YmxpYyIsImVtYWlsIjoiam9obkBtYWlsLmRlIiwicHJpdmFjeSI6ImV2ZXJ5b25lIiwiZnJpZW5kcyI6W10sImZyaWVuZHNBc2tlZCI6W10sImlhdCI6MTYwODEyODQwOCwiZXhwIjoxNjA4NzMzMjA4fQ.o_5UJDzrYkalgFyzsLjxgr_ZIilO4U948iWbOTV_Bw4
+
+### Get Posts: Friend
+GET http://localhost/api/posts
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZGExNTE1NGQ0NmMzNDVhMDAzMDZjYyIsIm5hbWUiOiJKb2huIERvZSIsInVzZXJuYW1lIjoiam9obiIsImVtYWlsIjoiam9obkBtYWlsLmRlIiwicHJpdmFjeSI6ImV2ZXJ5b25lIiwiZnJpZW5kcyI6W10sImZyaWVuZHNBc2tlZCI6W10sImlhdCI6MTYwODEyODQ3MSwiZXhwIjoxNjA4NzMzMjcxfQ.W6B8F9zU3Bsx_q-o1YGaWF56lc1MiGIq4DteVEA_eJ4
+
+### Get Posts: Private
+GET http://localhost/api/posts
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZGExNTZmNGQ0NmMzNDVhMDAzMDZkMSIsIm5hbWUiOiJQcml2YXRlIiwidXNlcm5hbWUiOiJwcml2YXRlIiwiZW1haWwiOiJqb2huQG1haWwuZGUiLCJwcml2YWN5IjoicHJpdmF0ZSIsImZyaWVuZHMiOltdLCJmcmllbmRzQXNrZWQiOltdLCJpYXQiOjE2MDgxMjg0MzMsImV4cCI6MTYwODczMzIzM30.LBQaf1K3TY38NN1X1urS20l49xEQE5Xq_pbPngOkuaA
+
+
+
+
 ### Get Post: Public
 GET http://localhost/api/posts/5fda190e4d46c345a00306d5
 

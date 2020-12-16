@@ -4,10 +4,27 @@ const mongoose = require("mongoose");
 const logger = require("../logger");
 const Post = require("../models/post");
 
+// Get List of Posts
+// Params: newer, older, max, author
 exports.getPosts = function (req, res) {
-  // TODO
+  Post.getPosts(
+    req.user,
+    req.query.newer,
+    req.query.older,
+    req.query.max,
+    req.query.author,
+    (err, posts) => {
+      if (err) {
+        logger.logError("Error in getPosts", err);
+        return res.status(500).json({ success: false, msg: err.message });
+      }
+
+      res.json({ success: true, result: posts });
+    }
+  );
 };
 
+// Get Single Post
 exports.getPost = function (req, res) {
   res.json({ success: true, result: req.post });
 };

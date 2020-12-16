@@ -28,8 +28,11 @@ Content-Type: application/json
 }
 
 ### Profile
-GET http://localhost/api/users/5fd7a30fb951e4131cf4a2cc
-Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZDdhMzBmYjk1MWU0MTMxY2Y0YTJjYyIsIm5hbWUiOiJKb2huIERvZSIsInVzZXJuYW1lIjoiam9obiIsImVtYWlsIjoiam9obkBtYWlsLmRlIiwicHJpdmFjeSI6ImV2ZXJ5b25lIiwiZnJpZW5kcyI6W10sImZyaWVuZHNBc2tlZCI6W10sImlhdCI6MTYwNzk2OTM0MSwiZXhwIjoxNjA4NTc0MTQxfQ.O7_aROwo-frXKuFbuJdovmbmj8m0xVwD5Pl9wp8eg8o
+GET http://localhost/api/users/5fda15614d46c345a00306d0
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZGExNTE1NGQ0NmMzNDVhMDAzMDZjYyIsIm5hbWUiOiJKb2huIERvZSIsInVzZXJuYW1lIjoiam9obiIsImVtYWlsIjoiam9obkBtYWlsLmRlIiwicHJpdmFjeSI6ImV2ZXJ5b25lIiwiZnJpZW5kcyI6W10sImZyaWVuZHNBc2tlZCI6W10sImlhdCI6MTYwODEyODQ3MSwiZXhwIjoxNjA4NzMzMjcxfQ.W6B8F9zU3Bsx_q-o1YGaWF56lc1MiGIq4DteVEA_eJ4
+
+### Profile; Fail
+GET http://localhost/api/users/5fd7a30fb951e4131cf4a2cd
 
 ### Change User
 POST http://localhost/api/users/5fda15444d46c345a00306cf
@@ -52,9 +55,6 @@ Content-Type: application/json
     "password": "12345678",
     "privacy": "private"
 }
-
-### Profile; Fail
-GET http://localhost/api/users/5fd7a30fb951e4131cf4a2cd
 
 ### Friend; self
 POST http://localhost/api/users/5fd7a30fb951e4131cf4a2cc/askFriend
