@@ -6,7 +6,7 @@
   "scripts": {
     "fullstart": "cd angular-scr && npm run build-prod && cd .. && node app",
     "start": "node app",
-    "build-frontend": "cd angular-src && npm run build-prod",
+    "build-frontend": "cd angular-scr && npm run build-prod",
     "dev": "nodemon app",
     "genApiDoc": "apidoc -o apidoc/ -e apidoc  -e node_modules -e angular-scr"
   },
