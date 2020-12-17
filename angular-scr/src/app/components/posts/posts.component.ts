@@ -4,6 +4,7 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 import { Post } from 'src/app/models';
 
 import { PostService } from '../../services/post.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-posts',
@@ -19,7 +20,8 @@ export class PostsComponent implements OnInit, OnDestroy {
   constructor(
     private postService: PostService,
     private router: Router,
-    private flashMessage: FlashMessagesService
+    private flashMessage: FlashMessagesService,
+    public userService: UserService
   ) {}
 
   ngOnInit(): void {

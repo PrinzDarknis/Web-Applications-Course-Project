@@ -4,7 +4,9 @@
   <a routerLink="/user/{{ post.author._id }}">{{ post.author.username }}</a>
   <br />
   <img
-    src="https://images-na.ssl-images-amazon.com/images/I/51JQCS5ZvhL._SX383_BO1,204,203,200_.jpg"
+    *ngIf="post.image"
+    class="img-fluid"
+    src="{{ userService.apiServer }}/api/posts/{{ post._id }}/image?size=small"
     alt="Post Image"
   />
   <br />
@@ -41,7 +43,9 @@
     <br />
     <ul class="list-group">
       <li *ngFor="let comment of post.comments" class="list-group-item">
-        {{ comment.author }}
+        <a routerLink="/user/{{ comment.author._id }}">{{
+          comment.author.username
+        }}</a>
         <br />
         {{ comment.text }}
       </li>

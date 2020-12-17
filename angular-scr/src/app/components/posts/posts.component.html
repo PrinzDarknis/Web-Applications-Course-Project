@@ -8,9 +8,12 @@
       <li class="list-group-item" routerLink="/user/{{ post.author._id }}">
         Author: {{ post.author.username }}
       </li>
-      <li class="list-group-item myImage">
+      <li *ngIf="post.image" class="list-group-item myImage">
         <img
-          src="https://images-na.ssl-images-amazon.com/images/I/51JQCS5ZvhL._SX383_BO1,204,203,200_.jpg"
+          class="img-fluid"
+          src="{{ userService.apiServer }}/api/posts/{{
+            post._id
+          }}/image?size=small"
           alt="Post Image"
         />
       </li>

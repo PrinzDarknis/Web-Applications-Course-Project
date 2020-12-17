@@ -14,6 +14,7 @@ const PostSchema = mongoose.Schema({
   },
   author: {
     type: mongoose.ObjectId,
+    ref: "Users",
     required: true,
   },
   postDate: {
@@ -36,6 +37,7 @@ const PostSchema = mongoose.Schema({
     {
       author: {
         type: mongoose.ObjectId,
+        ref: "Users",
         required: true,
       },
       text: {
@@ -131,6 +133,25 @@ PostSchema.static(
   }
 );
 
+PostSchema.method("postPopulate", function (callback) {
+  this.populate({ path: "author", select: "username _id" }, (err, tempPost) => {
+    if (err) return callback(err, null);
+
+    tempPost.populate(
+      { path: "comments.author", select: "username _id" },
+      (err, post) => {
+        if (err) return callback(err, null);
+
+        // Filter Image
+        post.imageData = undefined;
+        post.imageDataSmall = undefined;
+
+        callback(null, post);
+      }
+    );
+  });
+});
+
 const Post = (module.exports = mongoose.model("Posts", PostSchema));
 
 //aggregate Filter
@@ -163,6 +184,8 @@ const FilterOutputFields = {
     comments: 0,
     "author.privacy": 0,
     "author.friends": 0,
+    imageData: 0,
+    imageDataSmall: 0,
   },
 };
 

@@ -27,18 +27,11 @@ exports.getPosts = function (req, res) {
 
 // Get Single Post
 exports.getPost = function (req, res) {
-  User.findById(req.post.author, (err, author) => {
+  req.post.postPopulate((err, post) => {
     if (err) {
-      logger.logError("Error in getPost while find Author", err);
+      logger.logError("Error in getPost while postPopulate", err);
       return res.status(500).json({ success: false, msg: err.message });
     }
-
-    // insert Author Object
-    let post = req.post.toObject();
-    post.author = {
-      _id: author._id,
-      username: author.username,
-    };
 
     res.json({ success: true, result: post });
   });
@@ -86,7 +79,14 @@ exports.writePost = function (req, res) {
       return res.status(500).json({ success: false, msg: err.message });
     }
 
-    res.json({ success: true, result: newPost });
+    newPost.postPopulate((err, post) => {
+      if (err) {
+        logger.logError("Error in writePost while postPopulate", err);
+        return res.status(500).json({ success: false, msg: err.message });
+      }
+
+      res.json({ success: true, result: post });
+    });
   });
 };
 
@@ -105,6 +105,12 @@ exports.writeComment = function (req, res) {
       logError("Error while write Comment", err);
       return res.status(500).json({ success: false, msg: err.message });
     }
+
+    // Insert Author
+    comment.author = {
+      _id: req.user._id,
+      username: req.user.username,
+    };
 
     res.json({ success: true, result: comment });
   });

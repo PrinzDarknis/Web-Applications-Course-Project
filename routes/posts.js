@@ -125,14 +125,36 @@ const { logError } = require("../logger");
  */
 
 /**
+ * @apiDefine Content_Type_JSON
+ * @apiHeader (Headers) {String} Content-Type must be <code>'application/json'</code>
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *       "Content-Type" : "application/json"
+ *     }
+ */
+
+/**
  * @apiDefine registered Olny registered Users
  */
 
 /**
  * @apiDefine autorization
  * @apiHeader (Headers) {String} Authorization Authorization via JWT.
+ * @apiHeader (Headers) {String} Content-Type must be <code>'application/json'</code>
  * @apiHeaderExample {json} Header-Example:
  *     {
+ *       "Content-Type" : "application/json"
+ *       "Authorization": "JWT Ahjdkjsdjiw..."
+ *     }
+ */
+
+/**
+ * @apiDefine autorization_form_data
+ * @apiHeader (Headers) {String} Authorization Authorization via JWT.
+ * @apiHeader (Headers) {String} Content-Type must be <code>'multipart/form-data'</code> with boundary
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *       "Content-Type" : "multipart/form-data"
  *       "Authorization": "JWT Ahjdkjsdjiw..."
  *     }
  */
@@ -206,7 +228,7 @@ router.get(
  * @apiName WritePost
  * @apiGroup Post
  *
- * @apiUse autorization
+ * @apiUse autorization_form_data
  * @apiPermission registered
  *
  * @apiParam {String{1..}} title Title of the Post.
@@ -215,10 +237,12 @@ router.get(
  *
  * @apiUse apiSuccess_success
  * @apiSuccess {Object[]} result Created Post.
- * @apiUse apiSuccess_PostAsResult
+ * @apiUse apiSuccess_PostAsResult_Authorobject
  * @apiSuccess {Object[]} result.comments Array of Comments.
  * @apiSuccess {String} result.comments.id <code>id</code> of the Comment.
- * @apiSuccess {String} result.comments.author ID of the Author of the Comment.
+ * @apiSuccess {String} result.comments.author Author of the Comment.
+ * @apiSuccess {String} result.comments.author._id ID of Author of the Comment.
+ * @apiSuccess {String} result.comments.author.username Username of Author of the Comment.
  * @apiSuccess {String} result.comments.text Comment Text.
  * @apiSuccess {Date} result.comments.date Creation Date of the Comment.
  *
@@ -230,13 +254,19 @@ router.get(
  *          "_id": "10A46...",
  *          "title": "Post Title",
  *          "text": "some text.",
- *          "author": "854964141SHZ...",
+ *          "author": {
+ *            "_id": "5fda15344d46c345a00306ce",
+ *            "username": "john"
+ *          },
  *          "postDate": "15.12.2020 15:25:56",
  *          "image": "true",
  *          "comments": [
  *            {
  *              "_id": "HGTZJN5663",
- *              "author": "20A47",
+ *              "author": {
+ *                "_id": "5fda15344d46c345a00306ce",
+ *                "username": "john"
+ *              },
  *              "text": "nice Post",
  *              "date": "15.12.2020 15:35:56"
  *            }
@@ -274,7 +304,9 @@ router.post(
  * @apiUse apiSuccess_PostAsResult_Authorobject
  * @apiSuccess {Object[]} result.comments Array of Comments.
  * @apiSuccess {String} result.comments.id <code>id</code> of the Comment.
- * @apiSuccess {String} result.comments.author ID of the Author of the Comment.
+ * @apiSuccess {String} result.comments.author Author of the Comment.
+ * @apiSuccess {String} result.comments.author._id ID of Author of the Comment.
+ * @apiSuccess {String} result.comments.author.username Username of Author of the Comment.
  * @apiSuccess {String} result.comments.text Comment Text.
  * @apiSuccess {Date} result.comments.date Creation Date of the Comment.
  *
@@ -295,7 +327,10 @@ router.post(
  *          "comments": [
  *            {
  *              "_id": "HGTZJN5663",
- *              "author": "20A47",
+ *              "author": {
+ *                "_id": "5fda15344d46c345a00306ce",
+ *                "username": "john"
+ *              },
  *              "text": "nice Post",
  *              "date": "15.12.2020 15:35:56"
  *            }
