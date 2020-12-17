@@ -53,7 +53,12 @@ require("./passport")(passport);
 // Routes
 app.use("/api/users", usersRouter);
 app.use("/api/posts", postsRouter);
+
+// API Doc
 app.use("/api", express.static(path.join(__dirname, "apidoc"))); // API Documentation
+app.get("/api/*", (req, res) => {
+  res.sendStatus(404);
+});
 
 // static Frontend
 app.use(express.static(path.join(__dirname, "public")));
