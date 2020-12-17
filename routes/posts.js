@@ -2,6 +2,9 @@ const express = require("express");
 const { check } = require("express-validator");
 const passport = require("passport");
 
+var multer = require("multer");
+var upload = multer({ dest: "uploads/" });
+
 const usersController = require("../controller/users");
 const postsController = require("../controller/posts");
 const {
@@ -249,8 +252,9 @@ router.get(
 router.post(
   "/",
   [
-    check("title").trim().isString().isLength({ min: 1 }),
-    check("text").trim().isString().isLength({ min: 3 }),
+    upload.single("image"),
+    //check("title").trim().isString().isLength({ min: 1 }),
+    //check("text").trim().isString().isLength({ min: 3 }),
     passport.authenticate("jwt", { session: false }),
   ],
   postsController.writePost

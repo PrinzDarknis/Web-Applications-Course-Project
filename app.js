@@ -41,9 +41,21 @@ mongoose.connection.on("error", (err) => {
 
 const app = express();
 
+//eclude Path from use
+// Source: https://stackoverflow.com/questions/27117337/exclude-route-from-express-middleware
+var unless = function (path, middleware) {
+  return function (req, res, next) {
+    if (path === req.path) {
+      return next();
+    } else {
+      return middleware(req, res, next);
+    }
+  };
+};
+
 // Middleware
 app.use(cors());
-app.use(express.json());
+app.use(unless("/api/posts", express.json()));
 
 // Middleware: Passport
 app.use(passport.initialize());

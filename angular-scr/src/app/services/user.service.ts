@@ -23,6 +23,7 @@ export class UserService {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
+  httpOptionsOnlyAuth = {};
   jwtHelper = new JwtHelperService();
 
   constructor(private http: HttpClient) {
@@ -71,8 +72,7 @@ export class UserService {
           // Save Data
           localStorage.setItem('jwt', res.token);
           localStorage.setItem('user', JSON.stringify(res.result));
-          this.authToken = res.token;
-          this.user = res.result;
+          this.loadToken();
         }),
         catchError(this.errorHandler)
       );
@@ -100,6 +100,10 @@ export class UserService {
         'Content-Type': 'application/json',
         Authorization: this.authToken,
       });
+
+      this.httpOptionsOnlyAuth = {
+        headers: new HttpHeaders({ Authorization: this.authToken }),
+      };
     }
 
     try {

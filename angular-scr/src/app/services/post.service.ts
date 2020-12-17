@@ -117,37 +117,23 @@ export class PostService {
     callback: (response: WritePostResponse) => any
   ): void {
     // Payload
-    let payload: any = { title, text };
+    let formData: FormData = new FormData();
+    formData.append('title', title);
+    formData.append('text', text);
+
+    if (image) {
+      formData.append('image', image, image.name);
+    }
 
     // define Post Callback
-    let postCallback = () => {
-      this.http
-        .post<WritePostResponse>(
-          `${this.userService.apiServer}/api/posts`,
-          payload,
-          this.userService.httpOptions
-        )
-        .pipe(catchError(this.errorHandler))
-        .subscribe(callback);
-    };
-
-    // imsert Image in Payload before post
-    if (image) {
-      var reader = new FileReader();
-      reader.onload = () => {
-        payload.image = {
-          name: image.name,
-          type: image.type,
-          data: reader.result,
-        };
-        console.log(reader.result);
-
-        postCallback();
-      };
-      reader.readAsBinaryString(image);
-    } else {
-      postCallback();
-    }
+    this.http
+      .post<WritePostResponse>(
+        `${this.userService.apiServer}/api/posts`,
+        formData,
+        this.userService.httpOptionsOnlyAuth
+      )
+      .pipe(catchError(this.errorHandler))
+      .subscribe(callback);
   }
 
   writeComment(postID: string, text: string): Observable<WriteCommentResponse> {

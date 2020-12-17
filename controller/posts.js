@@ -1,5 +1,5 @@
-const { json } = require("express");
 const mongoose = require("mongoose");
+const fs = require("fs");
 
 const logger = require("../logger");
 const Post = require("../models/post");
@@ -45,17 +45,37 @@ exports.getPost = function (req, res) {
 };
 
 exports.getImage = function (req, res) {
-  // TODO Image
+  // TODO Image small
+  if (!req.post.image) {
+    return res.sendStatus(404);
+  }
+  let img = Buffer.from(req.post.imageData.data, "binary");
+
+  res.writeHead(200, {
+    "Content-Type": req.post.imageData.contentType,
+    "Content-Length": req.post.imageData.data.length,
+  });
+  res.end(img);
 };
 
 // Write Post
 exports.writePost = function (req, res) {
-  // TODO Image
+  req.body = JSON.parse(JSON.stringify(req.body)); //make body readable
+
+  // TODO small
   let post = new Post({
     title: req.body.title,
     text: req.body.text,
     author: req.user._id,
   });
+
+  if (req.file) {
+    post.image = true;
+    post.imageData = {
+      data: fs.readFileSync(req.file.path),
+      contentType: req.file.mimetype,
+    };
+  }
 
   post.save((err, newPost) => {
     if (err) {
