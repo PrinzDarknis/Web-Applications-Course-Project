@@ -75,6 +75,9 @@ exports.writePost = function (req, res) {
       data: fs.readFileSync(req.file.path),
       contentType: req.file.mimetype,
     };
+
+    //Remove temp File
+    fs.unlinkSync(req.file.path);
   }
 
   post.save((err, newPost) => {
