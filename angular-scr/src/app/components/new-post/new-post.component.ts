@@ -12,6 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 export class NewPostComponent implements OnInit {
   title: string;
   text: string;
+  image: File;
 
   constructor(
     private flashMessage: FlashMessagesService,
@@ -22,14 +23,20 @@ export class NewPostComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  fileChanged(files: FileList) {
+    this.image = files.item(0);
+  }
+
   writePost() {
     this.title = this.title.trim();
     this.text = this.text.trim();
 
     if (this.title.length >= 1 && this.text.length >= 3) {
-      this.postService
-        .writePost(this.title, this.text)
-        .subscribe((response) => {
+      this.postService.writePost(
+        this.title,
+        this.text,
+        this.image,
+        (response) => {
           if (response.success) {
             this.title = '';
             this.text = '';
@@ -49,7 +56,8 @@ export class NewPostComponent implements OnInit {
               }
             );
           }
-        });
+        }
+      );
     }
   }
 }
