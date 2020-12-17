@@ -1,3 +1,7 @@
 .container {
   padding-top: 65px;
 }
+
+.fixed {
+  position: fixed;
+}

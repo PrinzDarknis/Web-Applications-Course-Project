@@ -8,6 +8,7 @@ import {
   GetPostsResponse,
   Post,
   WriteCommentResponse,
+  WritePostResponse,
 } from '../models';
 import { UserService } from './user.service';
 
@@ -19,12 +20,45 @@ export class PostService {
   private authorPosts: Post[];
   private selectedPost: Post;
 
+  private postsObserverCallbacks = [];
+
   constructor(private userService: UserService, private http: HttpClient) {}
 
-  getPosts(): Observable<GetPostsResponse> {
-    // TODO Cache Load
+  newPostsSubscipe(callback) {
+    this.postsObserverCallbacks.push(callback);
+  }
+  newPostsUnsubscipe(callback) {
+    let index = this.postsObserverCallbacks.indexOf(callback);
+    if (index >= 0) this.postsObserverCallbacks.splice(index, 1);
+  }
 
-    // Load All
+  notifyObserver() {
+    this.postsObserverCallbacks.forEach((callback) => {
+      callback(this.posts);
+    });
+  }
+
+  getPosts(): Observable<GetPostsResponse> {
+    if (this.posts && this.posts.length > 0) return this.updatePosts();
+    else {
+      // Load All
+      let obs: Observable<GetPostsResponse> = this.http
+        .get<GetPostsResponse>(
+          `${this.userService.apiServer}/api/posts`,
+          this.userService.httpOptions
+        )
+        .pipe(catchError(this.errorHandler));
+
+      obs.subscribe((response) => {
+        this.posts = response.result;
+        this.notifyObserver();
+      });
+      return obs;
+    }
+  }
+
+  updatePosts(): Observable<GetPostsResponse> {
+    // TODO Cache Load (current no Cache)
     let obs: Observable<GetPostsResponse> = this.http
       .get<GetPostsResponse>(
         `${this.userService.apiServer}/api/posts`,
@@ -34,6 +68,7 @@ export class PostService {
 
     obs.subscribe((response) => {
       this.posts = response.result;
+      this.notifyObserver();
     });
     return obs;
   }
@@ -73,6 +108,16 @@ export class PostService {
       .pipe(catchError(this.errorHandler));
 
     return obs;
+  }
+
+  writePost(title: string, text: string): Observable<WritePostResponse> {
+    return this.http
+      .post<WritePostResponse>(
+        `${this.userService.apiServer}/api/posts`,
+        { title, text },
+        this.userService.httpOptions
+      )
+      .pipe(catchError(this.errorHandler));
   }
 
   writeComment(postID: string, text: string): Observable<WriteCommentResponse> {
