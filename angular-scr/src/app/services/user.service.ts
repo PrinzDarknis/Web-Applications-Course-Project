@@ -10,6 +10,7 @@ import {
   RegisterResponse,
   GetUserResponse,
   AuthenticateResponse,
+  ChangeUserDataResponse,
 } from '../models';
 
 @Injectable({
@@ -52,6 +53,16 @@ export class UserService {
     return this.http
       .get<GetUserResponse>(
         `${this.apiServer}/api/users/${id}`,
+        this.httpOptions
+      )
+      .pipe(catchError(this.errorHandler));
+  }
+
+  changePrivacy(privacy: string): Observable<ChangeUserDataResponse> {
+    return this.http
+      .post<ChangeUserDataResponse>(
+        `${this.apiServer}/api/users/${this.user.id}`,
+        { privacy },
         this.httpOptions
       )
       .pipe(catchError(this.errorHandler));

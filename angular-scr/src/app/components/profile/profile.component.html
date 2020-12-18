@@ -6,6 +6,37 @@
     <li *ngIf="user.privacy" class="list-group-item">
       Privacy: {{ user.privacy }}
     </li>
+    <li *ngIf="router.url === '/profile'" class="list-group-item">
+      <span
+        type="button"
+        class="badge btn-primary"
+        (click)="showPopup = !showPopup"
+      >
+        Change Privacy
+      </span>
+    </li>
   </ul>
   <app-posts author="{{ user.id }}"></app-posts>
+
+  <!-- Change Provacy -->
+  <div *ngIf="router.url === '/profile'" class="list-group-item">
+    <div
+      [class.hidden]="!showPopup"
+      class="popup_outer"
+      (click)="showPopup = false"
+    ></div>
+    <div class="popup" [class.hidden]="!showPopup">
+      <h2 class="popup_inner">
+        New Privacy:
+        <select (change)="changePrivacy($event.target.value)">
+          <option
+            *ngFor="let privacy of availablePrivacies"
+            [selected]="privacy == user.privacy"
+          >
+            {{ privacy }}
+          </option>
+        </select>
+      </h2>
+    </div>
+  </div>
 </div>
