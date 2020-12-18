@@ -370,6 +370,7 @@ router.get(
  *
  * @apiUse ErrorID
  * @apiUse ErrorPrivacy
+ * @apiUse ErrorParams
  * @apiUse Error500
  */
 router.get(

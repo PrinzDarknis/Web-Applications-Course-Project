@@ -43,11 +43,47 @@ exports.getImage = function (req, res) {
   if (!req.post.image) {
     return res.sendStatus(404);
   }
-  let img = Buffer.from(req.post.imageData.data, "binary");
+
+  //Check Params
+  let size = "normal";
+  if (typeof req.query.size == "string") size = req.query.size.toLowerCase();
+
+  // Prep Error Handler
+  let error = () => {
+    logger.logError(
+      `couldn't load Image from Database. Format: ${size}, PostID: ${req.post._id}`
+    );
+    res.sendStatus(404);
+  };
+
+  let img;
+  switch (size) {
+    case "normal":
+      if (!req.post.imageData.data) return error();
+      img = Buffer.from(req.post.imageData.data, "binary");
+      break;
+    case "small":
+      if (!req.post.imageDataSmall.data) return error();
+      img = Buffer.from(req.post.imageDataSmall.data, "binary");
+      break;
+    default:
+      return res.status(400).json({
+        success: false,
+        msg: "Invalide input",
+        error: [
+          {
+            value: req.params.size,
+            msg: "Invalide Value, allowed: ['normal','small']",
+            param: "size",
+            location: "query",
+          },
+        ],
+      });
+  }
 
   res.writeHead(200, {
     "Content-Type": req.post.imageData.contentType,
-    "Content-Length": req.post.imageData.data.length,
+    "Content-Length": img.length,
   });
   res.end(img);
 };
@@ -121,9 +157,6 @@ exports.writePost = function (req, res) {
           contentType: "image/png",
         };
 
-        //Remove temp File
-        fs.unlinkSync(req.file.path);
-
         // Save
         nowSave();
       })
@@ -132,6 +165,10 @@ exports.writePost = function (req, res) {
         res
           .status(500)
           .json({ success: false, message: "Coudn't process Image" });
+      })
+      .finally(() => {
+        //Remove temp File
+        fs.unlinkSync(req.file.path);
       });
   } else nowSave();
 };

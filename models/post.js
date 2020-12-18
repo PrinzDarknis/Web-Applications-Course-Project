@@ -33,7 +33,7 @@ const PostSchema = mongoose.Schema({
     contentType: String,
   },
   imageDataSmall: {
-    data: String,
+    data: Buffer,
     contentType: String,
   },
   comments: [
