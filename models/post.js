@@ -2,6 +2,9 @@ const mongoose = require("mongoose");
 
 const logger = require("../logger");
 
+const imageNormalSize = 1000;
+const imageSmallSize = 450;
+
 // Post Schema
 const PostSchema = mongoose.Schema({
   title: {
@@ -153,6 +156,8 @@ PostSchema.method("postPopulate", function (callback) {
 });
 
 const Post = (module.exports = mongoose.model("Posts", PostSchema));
+module.exports.imageSmallSize = imageSmallSize;
+module.exports.imageNormalSize = imageNormalSize;
 
 //aggregate Filter
 const substituteAuthorIdWithAuthor = {

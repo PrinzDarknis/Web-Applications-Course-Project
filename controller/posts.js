@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const fs = require("fs");
+const sharp = require("sharp");
 
 const logger = require("../logger");
 const Post = require("../models/post");
@@ -62,32 +63,77 @@ exports.writePost = function (req, res) {
     author: req.user._id,
   });
 
-  if (req.file) {
-    post.image = true;
-    post.imageData = {
-      data: fs.readFileSync(req.file.path),
-      contentType: req.file.mimetype,
-    };
-
-    //Remove temp File
-    fs.unlinkSync(req.file.path);
-  }
-
-  post.save((err, newPost) => {
-    if (err) {
-      logError("Error while write Post", err);
-      return res.status(500).json({ success: false, msg: err.message });
-    }
-
-    newPost.postPopulate((err, post) => {
+  // Callback Save Post
+  let nowSave = () => {
+    post.save((err, newPost) => {
       if (err) {
-        logger.logError("Error in writePost while postPopulate", err);
+        logError("Error while write Post", err);
         return res.status(500).json({ success: false, msg: err.message });
       }
 
-      res.json({ success: true, result: post });
+      newPost.postPopulate((err, post) => {
+        if (err) {
+          logger.logError("Error in writePost while postPopulate", err);
+          return res.status(500).json({ success: false, msg: err.message });
+        }
+
+        res.json({ success: true, result: post });
+      });
     });
-  });
+  };
+
+  if (req.file) {
+    // Resize Image Normal
+    let resizeNormal = sharp(req.file.path)
+      .resize({
+        width: Post.imageNormalSize,
+        height: Post.imageNormalSize,
+        fit: sharp.fit.inside,
+      })
+      .toFormat("png")
+      .png({ quality: 100 })
+      .toBuffer();
+    //.toFile(req.file.path + "_normal.png");
+
+    // Resize Image Small
+    let resizeSmall = sharp(req.file.path)
+      .resize({
+        width: Post.imageSmallSize,
+        height: Post.imageSmallSize,
+        fit: sharp.fit.inside,
+      })
+      .toFormat("png")
+      .png({ quality: 100 })
+      .toBuffer();
+    //.toFile(req.file.path + "_small.png");
+
+    // Save
+    Promise.all([resizeNormal, resizeSmall])
+      .then((erg) => {
+        // Save Image
+        post.image = true;
+        post.imageData = {
+          data: erg[0], // Buffer Normal
+          contentType: "image/png",
+        };
+        post.imageDataSmall = {
+          data: erg[1], // Buffer Small
+          contentType: "image/png",
+        };
+
+        //Remove temp File
+        fs.unlinkSync(req.file.path);
+
+        // Save
+        nowSave();
+      })
+      .catch((err) => {
+        logger.logError("Coudn't resize Image", err);
+        res
+          .status(500)
+          .json({ success: false, message: "Coudn't process Image" });
+      });
+  } else nowSave();
 };
 
 // Write Comment
