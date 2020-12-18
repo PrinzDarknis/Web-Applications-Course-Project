@@ -81,6 +81,9 @@ PostSchema.static(
               },
             ],
           },
+          {
+            $and: [{ "author.privacy": "friends" }, { "author._id": user._id }], // Author self
+          },
           // Private
           {
             $and: [{ "author.privacy": "private" }, { "author._id": user._id }],
