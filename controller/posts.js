@@ -39,7 +39,6 @@ exports.getPost = function (req, res) {
 };
 
 exports.getImage = function (req, res) {
-  // TODO Image small
   if (!req.post.image) {
     return res.sendStatus(404);
   }
@@ -92,7 +91,6 @@ exports.getImage = function (req, res) {
 exports.writePost = function (req, res) {
   req.body = JSON.parse(JSON.stringify(req.body)); //make body readable
 
-  // TODO small
   let post = new Post({
     title: req.body.title,
     text: req.body.text,
