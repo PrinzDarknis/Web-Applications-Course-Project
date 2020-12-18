@@ -12,6 +12,7 @@ import {
   AuthenticateResponse,
   ChangeUserDataResponse,
 } from '../models';
+import { cookie } from 'express-validator';
 
 @Injectable({
   providedIn: 'root',
@@ -105,6 +106,7 @@ export class UserService {
   private loadToken(): void {
     let token = localStorage.getItem('jwt');
     this.authToken = token;
+    document.cookie = `jwt=${token.split(' ')[1]}`;
 
     if (this.loggedIn()) {
       this.httpOptions.headers = new HttpHeaders({

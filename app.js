@@ -22,6 +22,7 @@ const path = require("path");
 const cors = require("cors"); // allows request to different domains
 const passport = require("passport");
 const mongoose = require("mongoose");
+const cookies = require("cookie-parser");
 
 const logger = require("./logger");
 const usersRouter = require("./routes/users");
@@ -44,6 +45,7 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(cookies());
 
 // Middleware: Passport
 app.use(passport.initialize());
