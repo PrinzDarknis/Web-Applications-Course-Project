@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { Post } from 'src/app/models';
@@ -11,53 +11,52 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.css'],
 })
-export class PostsComponent implements OnInit, OnDestroy {
+export class PostsComponent implements OnInit {
   @Input() author?: string;
 
   posts: Post[];
   isAuthor: boolean = false;
 
+  subsciption;
+
   constructor(
     private postService: PostService,
     private router: Router,
-    private flashMessage: FlashMessagesService,
+
     public userService: UserService
   ) {}
 
   ngOnInit(): void {
-    let cb = (response) => {
-      if (response.success) {
-        this.posts = response.result;
-        console.log(`[PostsComponent] Show ${this.posts.length} Posts`);
-      } else {
-        this.flashMessage.show(
-          `Couldn't load Posts: ${response.msg || 'Something went wrong'}`,
-          {
-            cssClass: 'alert-danger',
-            timeout: 3000,
-          }
-        );
-      }
-    };
-
     if (this.author) {
       // only his Posts
       this.isAuthor = true;
-      this.postService.getAuthorPosts(this.author).subscribe(cb);
+      this.postService
+        .getAuthorPosts(this.author)
+        .subscribe(this.showPosts.bind(this));
     } else {
       // all Posts
       this.isAuthor = false;
-      this.postService.newPostsSubscipe(this.loadNewPosts.bind(this)); // without bind this will be undefinded
-      this.postService.getPosts().subscribe(cb);
+      this.postService.getPosts().subscribe(this.showPosts.bind(this));
     }
   }
 
-  ngOnDestroy(): void {
-    this.postService.newPostsUnsubscipe(this.loadNewPosts);
+  loadMore() {
+    this.postService.getPosts(true);
   }
 
-  public loadNewPosts = function (posts: Post[]) {
+  public showPosts = function (posts: Post[]) {
+    let count = 0;
+    if (this.posts) count = this.posts.length;
+
     this.posts = posts;
+
+    if (this.posts.length == count) {
+      // No Updates
+      this.flashMessage.show(`No new Posts`, {
+        cssClass: 'alert-success',
+        timeout: 3000,
+      });
+    }
   };
 
   openPost(id: string, index: number) {

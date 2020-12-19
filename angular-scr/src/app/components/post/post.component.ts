@@ -26,20 +26,13 @@ export class PostComponent implements OnInit {
 
   ngOnInit(): void {
     let id = this.route.snapshot.paramMap.get('id');
-    this.postService.getPost(id).subscribe((response) => {
-      if (!response.success) {
-        this.flashMessage.show(
-          `Couldn't load Post: ${response.msg || 'Something went wrong'}`,
-          {
-            cssClass: 'alert-danger',
-            timeout: 3000,
-          }
-        );
+    this.postService.getPost(id).subscribe((post) => {
+      if (!post) {
         this.location.back();
         return;
       }
 
-      this.post = response.result;
+      this.post = post;
     });
   }
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subscriber } from 'rxjs';
 
 import {
   GetPostResponse,
@@ -11,82 +11,163 @@ import {
   WritePostResponse,
 } from '../models';
 import { UserService } from './user.service';
+import { FlashMessagesService } from 'angular2-flash-messages';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PostService {
   private posts: Post[];
+  private postsObervable: Observable<Post[]>;
+  private postsOberver: Subscriber<Post[]>;
+  private newestDate: Date;
+  private oldestDate: Date;
+  private authorID: string;
   private authorPosts: Post[];
+  private authorPostsObervable: Observable<Post[]>;
+  private authorPostsOberver: Subscriber<Post[]>;
+  private authorNewestDate: Date;
+  private authorOldestDate: Date;
   private selectedPost: Post;
 
   private postsObserverCallbacks = [];
 
-  constructor(private userService: UserService, private http: HttpClient) {}
+  constructor(
+    private flashMessage: FlashMessagesService,
+    private userService: UserService,
+    private http: HttpClient
+  ) {}
 
-  newPostsSubscipe(callback) {
-    this.postsObserverCallbacks.push(callback);
-  }
-  newPostsUnsubscipe(callback) {
-    let index = this.postsObserverCallbacks.indexOf(callback);
-    if (index >= 0) this.postsObserverCallbacks.splice(index, 1);
-  }
-
-  notifyObserver() {
-    this.postsObserverCallbacks.forEach((callback) => {
-      callback(this.posts);
-    });
-  }
-
-  getPosts(): Observable<GetPostsResponse> {
-    if (this.posts && this.posts.length > 0) return this.updatePosts();
-    else {
-      // Load All
-      let obs: Observable<GetPostsResponse> = this.http
-        .get<GetPostsResponse>(
-          `${this.userService.apiServer}/api/posts`,
-          this.userService.httpOptions
-        )
-        .pipe(catchError(this.errorHandler));
-
-      obs.subscribe((response) => {
-        this.posts = response.result;
-        this.notifyObserver();
+  getPosts(load_more: boolean = false): Observable<Post[]> {
+    // Load Observable
+    if (!this.postsObervable) {
+      this.postsObervable = new Observable<Post[]>((observer) => {
+        this.postsOberver = observer;
       });
-      return obs;
+      this.postsObervable.subscribe();
     }
-  }
 
-  updatePosts(): Observable<GetPostsResponse> {
-    // TODO Cache Load (current no Cache)
+    let params = '';
+
+    // Update
+    let update = !load_more && typeof this.newestDate != 'undefined';
+    if (update) {
+      params = `newer=${this.newestDate}`;
+    }
+
+    // load more
+    let more = load_more && typeof this.oldestDate != 'undefined';
+    if (more) {
+      params = `older=${this.oldestDate}`;
+    }
+
+    // Load All
     let obs: Observable<GetPostsResponse> = this.http
       .get<GetPostsResponse>(
-        `${this.userService.apiServer}/api/posts`,
+        `${this.userService.apiServer}/api/posts?${params}`,
         this.userService.httpOptions
       )
       .pipe(catchError(this.errorHandler));
 
     obs.subscribe((response) => {
-      this.posts = response.result;
-      this.notifyObserver();
+      if (response.success) {
+        if (update) {
+          this.posts = response.result.concat(this.posts);
+          if (response.firstDate) this.newestDate = response.firstDate;
+        } else if (more) {
+          this.posts = this.posts.concat(response.result);
+          if (response.lastDate) this.oldestDate = response.lastDate;
+        } else {
+          this.posts = response.result;
+          if (response.firstDate) this.newestDate = response.firstDate;
+          if (response.lastDate) this.oldestDate = response.lastDate;
+        }
+      } else {
+        this.flashMessage.show(
+          `Couldn't load Posts: ${response.msg || 'Something went wrong'}`,
+          {
+            cssClass: 'alert-danger',
+            timeout: 3000,
+          }
+        );
+      }
+
+      this.postsOberver.next(this.posts);
     });
-    return obs;
+
+    return this.postsObervable;
   }
 
-  getAuthorPosts(authorID: string): Observable<GetPostsResponse> {
-    console.log(`${this.userService.apiServer}/api/posts?author=${authorID}`);
+  getAuthorPosts(
+    authorID: string,
+    load_more: boolean = false
+  ): Observable<Post[]> {
+    // Load Observable
+    if (!this.authorPostsObervable) {
+      this.authorPostsObervable = new Observable<Post[]>((observer) => {
+        this.authorPostsOberver = observer;
+      });
+      this.authorPostsObervable.subscribe();
+    }
 
-    let obs = this.http
+    let params = '';
+
+    // Update
+    let update = authorID == this.authorID && !load_more && this.newestDate;
+    if (update) {
+      params = `newer=${this.authorNewestDate}`;
+    }
+
+    // load more
+    let more = authorID == this.authorID && load_more && this.oldestDate;
+    if (more) {
+      params = `older=${this.authorOldestDate}`;
+    }
+
+    console.log('new: ' + authorID);
+    console.log('old: ' + this.authorID);
+    console.log('update: ' + update);
+    console.log('mor: ' + more);
+
+    //Save author
+    this.authorID = authorID;
+
+    let obs: Observable<GetPostsResponse> = this.http
       .get<GetPostsResponse>(
-        `${this.userService.apiServer}/api/posts?author=${authorID}`,
+        `${this.userService.apiServer}/api/posts?author=${authorID}&${params}`,
         this.userService.httpOptions
       )
       .pipe(catchError(this.errorHandler));
 
     obs.subscribe((response) => {
-      this.authorPosts = response.result;
+      if (response.success) {
+        if (update) {
+          this.authorPosts = response.result.concat(this.authorPosts);
+          this.authorNewestDate = response.firstDate;
+        } else if (more) {
+          this.authorPosts = this.authorPosts.concat(response.result);
+          this.authorOldestDate = response.lastDate;
+        } else {
+          this.authorPosts = response.result;
+          this.authorNewestDate = response.firstDate;
+          this.authorOldestDate = response.lastDate;
+        }
+      } else {
+        this.flashMessage.show(
+          `Couldn't load Posts: ${response.msg || 'Something went wrong'}`,
+          {
+            cssClass: 'alert-danger',
+            timeout: 3000,
+          }
+        );
+      }
+
+      console.log('author');
+
+      this.authorPostsOberver.next(this.authorPosts);
     });
-    return obs;
+
+    return this.authorPostsObervable;
   }
 
   selectPost(index: number, isAuthorPost: boolean) {
@@ -94,20 +175,36 @@ export class PostService {
     else this.selectedPost = this.posts[index];
   }
 
-  getPost(id: string): Observable<GetPostResponse> {
-    // TODO selectedPost (cache)
-    // if (this.selectedPost && id == this.selectedPost._id) {
-    //   return this.selectedPost;
-    // }
+  getPost(id: string): Observable<Post> {
+    return new Observable<Post>((observer) => {
+      let onlyComments =
+        typeof this.selectedPost != 'undefined' && id == this.selectedPost._id;
 
-    let obs = this.http
-      .get<GetPostResponse>(
-        `${this.userService.apiServer}/api/posts/${id}`,
-        this.userService.httpOptions
-      )
-      .pipe(catchError(this.errorHandler));
+      let obs: Observable<GetPostResponse> = this.http
+        .get<GetPostResponse>(
+          `${this.userService.apiServer}/api/posts/${id}?onlyComments=${onlyComments}`,
+          this.userService.httpOptions
+        )
+        .pipe(catchError(this.errorHandler));
 
-    return obs;
+      obs.subscribe((response) => {
+        if (response.success) {
+          if (onlyComments)
+            this.selectedPost.comments = response.result.comments;
+          else this.selectedPost = response.result;
+          observer.next(this.selectedPost);
+        } else {
+          this.flashMessage.show(
+            `Couldn't load Post: ${response.msg || 'Something went wrong'}`,
+            {
+              cssClass: 'alert-danger',
+              timeout: 3000,
+            }
+          );
+          observer.next();
+        }
+      });
+    });
   }
 
   writePost(

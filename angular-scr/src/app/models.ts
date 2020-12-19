@@ -105,6 +105,8 @@ export interface GetPostResponse {
 export interface GetPostsResponse {
   success: boolean;
   result: Post[];
+  firstDate: Date;
+  lastDate: Date;
   msg: string;
   error: any;
 }

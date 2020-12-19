@@ -46,7 +46,7 @@ export class NewPostComponent implements OnInit {
               timeout: 3000,
             });
 
-            this.postService.updatePosts().subscribe((response) => {});
+            this.postService.getPosts().subscribe((response) => {});
           } else {
             this.flashMessage.show(
               `Couldn't post: ${response.msg || 'Something went wrong'}`,
