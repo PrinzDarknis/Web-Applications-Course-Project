@@ -71,6 +71,7 @@ export class PostService {
 
     obs.subscribe((response) => {
       if (response.success) {
+        console.log(response.result);
         if (update) {
           this.posts = response.result.concat(this.posts);
           if (response.firstDate) this.newestDate = response.firstDate;
@@ -161,8 +162,6 @@ export class PostService {
           }
         );
       }
-
-      console.log('author');
 
       this.authorPostsOberver.next(this.authorPosts);
     });

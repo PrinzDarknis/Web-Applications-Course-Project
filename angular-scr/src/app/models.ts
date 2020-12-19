@@ -25,7 +25,7 @@ export interface Post {
   _id: string;
   title: string;
   text: string;
-  author: string | Author; // TODO
+  author: Author;
   postDate: Date;
   image: boolean;
   comments: Comment[];

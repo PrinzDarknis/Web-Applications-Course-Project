@@ -45,6 +45,7 @@ export class PostsComponent implements OnInit {
   }
 
   public showPosts = function (posts: Post[]) {
+    console.log('showPosts');
     let count = 0;
     if (this.posts) count = this.posts.length;
 
