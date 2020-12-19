@@ -6,8 +6,8 @@ try {
 // TOD- 15  Using React.js front-end
 // TOD-  5  Using redux and an advanced React architecture
 // TOD-  5  Running your application in a Docker container (or having the application Docker compatible)
-// TODO  5  Running your application in Rahti
-// TODO  3  Having more than one container (such as a separate database server or a load balancer)
+// TOD-  5  Running your application in Rahti
+// TOD-  3  Having more than one container (such as a separate database server or a load balancer)
 // TOD-  5  Using a database, such as Mongo, Redis, or any SQL-compatible
 // TOD-  3  Use an ORM and models in backend, such as the Mongoose (MongoDB) or Sequelize (SQL)
 // TOD-  5  Supporting pictures storage and display

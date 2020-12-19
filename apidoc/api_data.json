@@ -1484,7 +1484,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"result\": {\n     \"id\": \"10A46\",\n     \"name\": \"John Doe\",\n     \"username\": \"John_Doe\"\n  }\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"result\": {\n     \"id\": \"10A46\",\n     \"name\": \"John Doe\",\n     \"username\": \"John_Doe\",\n     \"friendsAsked\": [ \"Maria\", \"Yui\" ]\n  }\n}",
           "type": "json"
         },
         {
