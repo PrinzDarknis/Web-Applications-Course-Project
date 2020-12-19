@@ -162,36 +162,64 @@ const Post = (module.exports = mongoose.model("Posts", PostSchema));
 module.exports.imageSmallSize = imageSmallSize;
 module.exports.imageNormalSize = imageNormalSize;
 
-//aggregate Filter
+// aggregate Filter
+// Mongo DB 3.6
+// const substituteAuthorIdWithAuthor = {
+//   // join
+//   $lookup: {
+//     from: "users",
+//     let: { author_id: "$author" }, // let author_id = author (Variable for use in pipe)
+//     pipeline: [
+//       // author match id
+//       { $match: { $expr: { $eq: ["$_id", "$$author_id"] } } },
+//       // Show only ID and Username of Author
+//       {
+//         $project: {
+//           _id: 1,
+//           username: 1,
+//           privacy: 1,
+//           friends: 1,
+//         },
+//       },
+//     ],
+//     as: "author",
+//   },
+// };
+
+// Mongo DB 3.2
 const substituteAuthorIdWithAuthor = {
   // join
   $lookup: {
     from: "users",
-    let: { author_id: "$author" }, // let author_id = author (Variable for use in pipe)
-    pipeline: [
-      // author match id
-      { $match: { $expr: { $eq: ["$_id", "$$author_id"] } } },
-      // Show only ID and Username of Author
-      {
-        $project: {
-          _id: 1,
-          username: 1,
-          privacy: 1,
-          friends: 1,
-        },
-      },
-    ],
+    localField: "author",
+    foreignField: "_id",
     as: "author",
   },
 };
 
 const AuthorArraytoObject = { $unwind: "$author" }; // Author replace array with object
 
+// Mongo DB 3.6
+// const FilterOutputFields = {
+//   $project: {
+//     comments: 0,
+//     "author.privacy": 0,
+//     "author.friends": 0,
+//     imageData: 0,
+//     imageDataSmall: 0,
+//   },
+// };
+
+// Mongo DB 3.2
 const FilterOutputFields = {
   $project: {
     comments: 0,
+    "author.name": 0,
+    "author.email": 0,
+    "author.password": 0,
     "author.privacy": 0,
     "author.friends": 0,
+    "author.friendsAsked": 0,
     imageData: 0,
     imageDataSmall: 0,
   },
