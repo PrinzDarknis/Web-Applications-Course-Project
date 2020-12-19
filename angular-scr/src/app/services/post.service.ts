@@ -71,7 +71,6 @@ export class PostService {
 
     obs.subscribe((response) => {
       if (response.success) {
-        console.log(response.result);
         if (update) {
           this.posts = response.result.concat(this.posts);
           if (response.firstDate) this.newestDate = response.firstDate;
@@ -124,11 +123,6 @@ export class PostService {
     if (more) {
       params = `older=${this.authorOldestDate}`;
     }
-
-    console.log('new: ' + authorID);
-    console.log('old: ' + this.authorID);
-    console.log('update: ' + update);
-    console.log('mor: ' + more);
 
     //Save author
     this.authorID = authorID;
