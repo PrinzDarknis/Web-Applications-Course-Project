@@ -177,6 +177,8 @@ const router = express.Router();
  * @apiUse apiSuccess_success
  * @apiSuccess {Object[]} result Array of Posts.
  * @apiUse apiSuccess_PostAsResult_Authorobject
+ * @apiSuccess {Date} firstDate Date of the first Post (for loading more later).
+ * @apiSuccess {Date} lastDate Date of the last Post (for loading more later).
  *
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
@@ -194,7 +196,9 @@ const router = express.Router();
  *            "postDate": "15.12.2020 15:25:56",
  *            "image": "true"
  *          }
- *       ]
+ *       ],
+ *       "firstDate": "15.12.2020 15:25:56",
+ *       "lastDate": "15.12.2020 15:25:56",
  *     }
  *
  * @apiUse ErrorParams
@@ -298,6 +302,7 @@ router.post(
  * @apiUse autorization_optional
  *
  * @apiParam {Number} id Posts unique ID.
+ * @apiParam {Boolean} onlyComments Return only the Comments of the Post. (optional) <br/> Use: if Post already known because of getPosts
  *
  * @apiUse apiSuccess_success
  * @apiSuccess {Object[]} result Array of Posts.
@@ -340,11 +345,14 @@ router.post(
  *
  * @apiUse ErrorID
  * @apiUse ErrorPrivacy
+ * @apiUse ErrorParams
  * @apiUse Error500
  */
 router.get(
   "/:id",
   [
+    check("onlyComments").trim().isBoolean().toBoolean().optional(),
+    checkValidate,
     authenticateOptional,
     checkID,
     postsController.MW_getPostByID,

@@ -21,7 +21,13 @@ exports.getPosts = function (req, res) {
         return res.status(500).json({ success: false, msg: err.message });
       }
 
-      res.json({ success: true, result: posts });
+      let firstDate, lastDate;
+      if (posts.length > 0) {
+        firstDate = posts[0].postDate;
+        lastDate = posts[posts.length - 1].postDate;
+      }
+
+      res.json({ success: true, result: posts, firstDate, lastDate });
     }
   );
 };
@@ -34,7 +40,9 @@ exports.getPost = function (req, res) {
       return res.status(500).json({ success: false, msg: err.message });
     }
 
-    res.json({ success: true, result: post });
+    if (req.query.onlyComments)
+      res.json({ success: true, result: { comments: post.comments } });
+    else res.json({ success: true, result: post });
   });
 };
 

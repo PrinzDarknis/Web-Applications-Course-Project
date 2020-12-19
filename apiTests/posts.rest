@@ -63,7 +63,7 @@ Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZGExNTZmNGQ0
 
 
 ### Get Post: Public
-GET http://localhost/api/posts/5fda190e4d46c345a00306d5
+GET http://localhost/api/posts/5fdd2488d153c307fc6e598f
 
 ### Get Post: Registered
 GET http://localhost/api/posts/5fda18ef4d46c345a00306d4
@@ -87,3 +87,6 @@ Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZGExNTZmNGQ0
 ### Get Post: Private Fail
 GET http://localhost/api/posts/5fda18c24d46c345a00306d2
 Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZGExNTE1NGQ0NmMzNDVhMDAzMDZjYyIsIm5hbWUiOiJKb2huIERvZSIsInVzZXJuYW1lIjoiam9obiIsImVtYWlsIjoiam9obkBtYWlsLmRlIiwicHJpdmFjeSI6ImV2ZXJ5b25lIiwiZnJpZW5kcyI6W10sImZyaWVuZHNBc2tlZCI6W10sImlhdCI6MTYwODEyODQ3MSwiZXhwIjoxNjA4NzMzMjcxfQ.W6B8F9zU3Bsx_q-o1YGaWF56lc1MiGIq4DteVEA_eJ4
+
+### Get Post: Only Comments
+GET http://localhost/api/posts/5fda190e4d46c345a00306d5?onlyComments=true

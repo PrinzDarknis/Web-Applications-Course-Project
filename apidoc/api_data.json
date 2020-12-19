@@ -14,6 +14,13 @@
             "optional": false,
             "field": "id",
             "description": "<p>Posts unique ID.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Boolean",
+            "optional": false,
+            "field": "onlyComments",
+            "description": "<p>Return only the Comments of the Post. (optional) <br/> Use: if Post already known because of getPosts</p>"
           }
         ]
       }
@@ -187,6 +194,12 @@
             "optional": false,
             "field": "Unauthorized",
             "description": "<p>Following the Posts privacy you are not allowed to fetch the Data.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "InvalideParams",
+            "description": "<p>same of the given params are invalide</p>"
           }
         ],
         "Error 5xx": [
@@ -207,6 +220,11 @@
         {
           "title": "Unauthorized:",
           "content": "HTTP/1.1 401 Unauthorized\n{\n  \"success\": false,\n  \"msg\": \"Following the Posts privacy you are not allowed to fetch the Data\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "InvalideParams:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n  \"success\": false,\n  \"msg\": \"Invalide input\",\n  \"error\": [\n     {\n       \"value\": \"invalide Value\",\n       \"msg\": \"what is wrong\",\n       \"param\": \"parameter Name\",\n       \"location\": \"parameter location\"\n     }\n  ]\n}",
           "type": "json"
         },
         {
@@ -293,6 +311,12 @@
             "optional": false,
             "field": "Unauthorized",
             "description": "<p>Following the Posts privacy you are not allowed to fetch the Data.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "InvalideParams",
+            "description": "<p>same of the given params are invalide</p>"
           }
         ],
         "Error 5xx": [
@@ -313,6 +337,11 @@
         {
           "title": "Unauthorized:",
           "content": "HTTP/1.1 401 Unauthorized\n{\n  \"success\": false,\n  \"msg\": \"Following the Posts privacy you are not allowed to fetch the Data\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "InvalideParams:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n  \"success\": false,\n  \"msg\": \"Invalide input\",\n  \"error\": [\n     {\n       \"value\": \"invalide Value\",\n       \"msg\": \"what is wrong\",\n       \"param\": \"parameter Name\",\n       \"location\": \"parameter location\"\n     }\n  ]\n}",
           "type": "json"
         },
         {
@@ -374,6 +403,20 @@
             "optional": false,
             "field": "result",
             "description": "<p>Array of Posts.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "firstDate",
+            "description": "<p>Date of the first Post (for loading more later).</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "lastDate",
+            "description": "<p>Date of the last Post (for loading more later).</p>"
           },
           {
             "group": "Success 200",
@@ -443,7 +486,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"result\": [\n     {\n       \"_id\": \"10A46\",\n       \"title\": \"Post Title\",\n       \"text\": \"some text.\",\n       \"author\": {\n         \"_id\": \"5fda15344d46c345a00306ce\",\n         \"username\": \"john\"\n       },\n       \"postDate\": \"15.12.2020 15:25:56\",\n       \"image\": \"true\"\n     }\n  ]\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"success\": true,\n  \"result\": [\n     {\n       \"_id\": \"10A46\",\n       \"title\": \"Post Title\",\n       \"text\": \"some text.\",\n       \"author\": {\n         \"_id\": \"5fda15344d46c345a00306ce\",\n         \"username\": \"john\"\n       },\n       \"postDate\": \"15.12.2020 15:25:56\",\n       \"image\": \"true\"\n     }\n  ],\n  \"firstDate\": \"15.12.2020 15:25:56\",\n  \"lastDate\": \"15.12.2020 15:25:56\",\n}",
           "type": "json"
         }
       ]
