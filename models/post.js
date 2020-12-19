@@ -76,7 +76,7 @@ PostSchema.static(
               { "author.privacy": "friends" },
               {
                 "author.friends": {
-                  $elemMatch: { $eq: user._id.toString() }, // friends contains Strings and not ObjectIDs
+                  $elemMatch: { $eq: user._id },
                 },
               },
             ],

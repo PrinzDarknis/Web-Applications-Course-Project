@@ -214,7 +214,8 @@ router.post(
  *       "result": {
  *          "id": "10A46",
  *          "name": "John Doe",
- *          "username": "John_Doe"
+ *          "username": "John_Doe",
+ *          "friendsAsked": [ "Maria", "Yui" ]
  *       }
  *     }
  *

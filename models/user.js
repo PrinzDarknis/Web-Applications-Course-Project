@@ -26,12 +26,14 @@ const UserSchema = mongoose.Schema({
   },
   friends: [
     {
-      type: String,
+      type: mongoose.ObjectId,
+      ref: "Users",
     },
   ],
   friendsAsked: [
     {
-      type: String,
+      type: mongoose.ObjectId,
+      ref: "Users",
     },
   ],
 });
@@ -63,24 +65,35 @@ UserSchema.method("checkPassword", function (candidatePassword, callback) {
   bycrypt.compare(candidatePassword, this.password, callback);
 });
 
-UserSchema.method("getTransmitObjet", function (privacy = false) {
-  if (privacy) {
-    return {
-      id: this._id,
-      name: this.name,
-      username: this.username,
-    };
-  }
+UserSchema.method("getTransmitObjet", function (callback, privacy = false) {
+  this.populate({ path: "friends", select: "username _id" }, (err, extUser) => {
+    if (err) callback(err, null);
+    extUser.populate(
+      { path: "friendsAsked", select: "username _id" },
+      (err, extUser) => {
+        if (err) callback(err, null);
 
-  return {
-    id: this._id,
-    name: this.name,
-    username: this.username,
-    email: this.email,
-    privacy: this.privacy,
-    friends: this.friends,
-    friendsAsked: this.friendsAsked,
-  };
+        if (privacy) {
+          callback(null, {
+            id: extUser._id,
+            name: extUser.name,
+            username: extUser.username,
+            friendsAsked: extUser.friendsAsked,
+          });
+        }
+
+        callback(null, {
+          id: extUser._id,
+          name: extUser.name,
+          username: extUser.username,
+          email: extUser.email,
+          privacy: extUser.privacy,
+          friends: extUser.friends,
+          friendsAsked: extUser.friendsAsked,
+        });
+      }
+    );
+  });
 });
 
 const User = (module.exports = mongoose.model("Users", UserSchema));

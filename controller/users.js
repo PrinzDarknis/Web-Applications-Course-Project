@@ -62,16 +62,21 @@ exports.authenticate = function (req, res) {
           .status(401)
           .json({ success: false, msg: "Wrong Username or Password" });
 
-      const userData = user.getTransmitObjet();
+      user.getTransmitObjet((err, userData) => {
+        if (err) {
+          logger.logError("Error while getTransmitObjet in authenticate", err);
+          return res.status(500).json({ success: false, msg: err.msg });
+        }
 
-      const token = jwt.sign(userData, process.env.TOKEN_SECRET, {
-        expiresIn: 604800, // 1 week
-      });
+        const token = jwt.sign(userData, process.env.TOKEN_SECRET, {
+          expiresIn: 604800, // 1 week
+        });
 
-      res.json({
-        success: true,
-        token: `JWT ${token}`,
-        result: userData,
+        res.json({
+          success: true,
+          token: `JWT ${token}`,
+          result: userData,
+        });
       });
     });
   });
@@ -84,7 +89,17 @@ exports.profile = function (req, res) {
     (!req.user._id.equals(req.targetUser._id) &&
       !req.targetUser.friends.includes(req.user._id));
 
-  res.json({ success: true, result: req.targetUser.getTransmitObjet(privacy) });
+  req.targetUser.getTransmitObjet((err, userdata) => {
+    if (err) {
+      logger.logError("Error while getTransmitObjet in authenticate", err);
+      return res.status(500).json({ success: false, msg: err.msg });
+    }
+
+    res.json({
+      success: true,
+      result: userdata,
+    });
+  }, privacy);
 };
 
 // Change User
@@ -124,7 +139,17 @@ exports.changeUser = function (req, res, next) {
         return res.status(500).json({ success: false, msg: err.message });
       }
 
-      res.json({ success: true, result: newUser.getTransmitObjet() });
+      newUser.targetUser.getTransmitObjet((err, userdata) => {
+        if (err) {
+          logger.logError("Error while getTransmitObjet in authenticate", err);
+          return res.status(500).json({ success: false, msg: err.msg });
+        }
+
+        res.json({
+          success: true,
+          result: userdata,
+        });
+      });
     };
 
     if (req.body.password) req.user.hashAndSave(afterSave);

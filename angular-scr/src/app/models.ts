@@ -4,8 +4,14 @@ export interface User {
   username: string;
   email: string;
   privacy: string;
-  friends: string[];
-  friendsAsked: string[];
+  friends: {
+    _id: string;
+    username: string;
+  }[];
+  friendsAsked: {
+    _id: string;
+    username: string;
+  }[];
 }
 
 export interface User_Register {

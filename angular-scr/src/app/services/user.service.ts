@@ -11,6 +11,7 @@ import {
   GetUserResponse,
   AuthenticateResponse,
   ChangeUserDataResponse,
+  AskFriendshipResponse,
 } from '../models';
 import { cookie } from 'express-validator';
 
@@ -69,6 +70,16 @@ export class UserService {
       .pipe(catchError(this.errorHandler));
   }
 
+  aksFriend(id: string): Observable<AskFriendshipResponse> {
+    return this.http
+      .post<AskFriendshipResponse>(
+        `${this.apiServer}/api/users/${id}/askFriend`,
+        {},
+        this.httpOptions
+      )
+      .pipe(catchError(this.errorHandler));
+  }
+
   loginUser(
     username: string,
     password: string
@@ -94,6 +105,7 @@ export class UserService {
     this.authToken = null;
     this.user = null;
     localStorage.clear();
+    document.cookie = 'jwt=';
     this.httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     };
@@ -106,7 +118,7 @@ export class UserService {
   private loadToken(): void {
     let token = localStorage.getItem('jwt');
     this.authToken = token;
-    document.cookie = `jwt=${token.split(' ')[1]}`;
+    if (token) document.cookie = `jwt=${token.split(' ')[1]}`;
 
     if (this.loggedIn()) {
       this.httpOptions.headers = new HttpHeaders({

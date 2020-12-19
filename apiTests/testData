@@ -6,7 +6,7 @@
 
 # User:
 
-{"_id":{"$oid":"5fda15154d46c345a00306cc"},"privacy":"everyone","friends":["5fda15614d46c345a00306d0","5fda156f4d46c345a00306d1"],"friendsAsked":[],"name":"John Doe","email":"john@mail.de","username":"john","password":"$2a$10$PaLdk79Gfz5DPsa62PVYH.IPj5vNA3Cv2v1slhAgcfwtfv1/fTEK2","__v":{"$numberInt":"2"}}
+{"_id":{"$oid":"5fda15154d46c345a00306cc"},"privacy":"everyone","friends":[{"$oid":"5fda15614d46c345a00306d0"},{"$oid":"5fda156f4d46c345a00306d1"}],"friendsAsked":[],"name":"John Doe","email":"john@mail.de","username":"john","password":"$2a$10$PaLdk79Gfz5DPsa62PVYH.IPj5vNA3Cv2v1slhAgcfwtfv1/fTEK2","__v":{"$numberInt":"2"}}
 
 {"_id":{"$oid":"5fda15264d46c345a00306cd"},"privacy":"everyone","friends":[],"friendsAsked":[],"name":"Change","email":"john@mail.de","username":"change","password":"$2a$10$JWGd23ECrkPnvtBSp78gqel1V3Ny4vN3RodYaQiw33oxGp.BHRtRC","__v":{"$numberInt":"0"}}
 
@@ -14,9 +14,9 @@
 
 {"_id":{"$oid":"5fda15444d46c345a00306cf"},"privacy":"registered","friends":[],"friendsAsked":[],"name":"Registered","email":"john@mail.de","username":"reg","password":"$2a$10$TPHZGUm3FnSmcT43Tk.TjuchFylargQpdoOoE9I88eU1ZkATdcsAO","__v":{"$numberInt":"0"}}
 
-{"_id":{"$oid":"5fda15614d46c345a00306d0"},"privacy":"friends","friends":["5fda15154d46c345a00306cc"],"friendsAsked":[],"name":"Friends","email":"john@mail.de","username":"friends","password":"$2a$10$JfnNxwVA3AeDWSa/9BZ.6OBKCuHKip7jXLWrQWscTltNiGWkJcsKW","__v":{"$numberInt":"2"}}
+{"_id":{"$oid":"5fda15614d46c345a00306d0"},"privacy":"friends","friends":[{"$oid":"5fda15154d46c345a00306cc"}],"friendsAsked":[],"name":"Friends","email":"john@mail.de","username":"friends","password":"$2a$10$JfnNxwVA3AeDWSa/9BZ.6OBKCuHKip7jXLWrQWscTltNiGWkJcsKW","__v":{"$numberInt":"2"}}
 
-{"_id":{"$oid":"5fda156f4d46c345a00306d1"},"privacy":"private","friends":["5fda15154d46c345a00306cc"],"friendsAsked":[],"name":"Private","email":"john@mail.de","username":"private","password":"$2a$10$LV9q.uJ4oXO5XDrZh1xSi.v2p93ZRUaL0YPA7L0qGu6YRPQoFPlXW","__v":{"$numberInt":"2"}}
+{"_id":{"$oid":"5fda156f4d46c345a00306d1"},"privacy":"private","friends":[{"$oid":"5fda15154d46c345a00306cc"}],"friendsAsked":[],"name":"Private","email":"john@mail.de","username":"private","password":"$2a$10$LV9q.uJ4oXO5XDrZh1xSi.v2p93ZRUaL0YPA7L0qGu6YRPQoFPlXW","__v":{"$numberInt":"2"}}
 
 # Posts:
 

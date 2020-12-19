@@ -22,7 +22,7 @@ export class PostsComponent implements OnInit {
   constructor(
     private postService: PostService,
     private router: Router,
-
+    private flashMessage: FlashMessagesService,
     public userService: UserService
   ) {}
 

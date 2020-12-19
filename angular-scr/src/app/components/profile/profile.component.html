@@ -5,9 +5,9 @@
     <li *ngIf="user.email" class="list-group-item">Email: {{ user.email }}</li>
     <li *ngIf="user.privacy" class="list-group-item">
       Privacy: {{ user.privacy }}
-    </li>
-    <li *ngIf="router.url === '/profile'" class="list-group-item">
+      <br />
       <span
+        *ngIf="router.url === '/profile'"
         type="button"
         class="badge btn-primary"
         (click)="showPopup = !showPopup"
@@ -15,11 +15,67 @@
         Change Privacy
       </span>
     </li>
+    <li
+      *ngIf="
+        userService.loggedIn() &&
+        router.url !== '/profile' &&
+        user.id != userService.user.id
+      "
+      class="list-group-item"
+    >
+      <span
+        *ngIf="!isFriend && !isFriendAsked"
+        type="button"
+        class="badge btn-primary"
+        (click)="askedFriend()"
+      >
+        Ask for Friendship
+      </span>
+      <span
+        *ngIf="!isFriend && isFriendAsked"
+        type="button"
+        class="badge btn-secondary"
+      >
+        Asked
+      </span>
+      <span *ngIf="isFriend" type="button" class="badge btn-secondary">
+        Friends
+      </span>
+    </li>
+    <li *ngIf="user.friends" class="list-group-item">
+      <h5>Friends:</h5>
+      <span
+        *ngFor="let friend of user.friends"
+        routerLink="/user/{{ friend._id }}"
+        type="button"
+        class="badge btn-secondary friends"
+      >
+        {{ friend.username }}
+      </span>
+    </li>
+    <li
+      *ngIf="
+        router.url === '/profile' &&
+        user.friendsAsked &&
+        user.friendsAsked.length > 0
+      "
+      class="list-group-item"
+    >
+      <h5>Friend Requests:</h5>
+      <span
+        *ngFor="let friend of user.friendsAsked"
+        routerLink="/user/{{ friend._id }}"
+        type="button"
+        class="badge btn-secondary friends"
+      >
+        {{ friend.username }}
+      </span>
+    </li>
   </ul>
   <app-posts author="{{ user.id }}"></app-posts>
 
   <!-- Change Provacy -->
-  <div *ngIf="router.url === '/profile'" class="list-group-item">
+  <div *ngIf="router.url === '/profile'">
     <div
       [class.hidden]="!showPopup"
       class="popup_outer"
