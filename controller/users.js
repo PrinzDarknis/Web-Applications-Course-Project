@@ -139,7 +139,7 @@ exports.changeUser = function (req, res, next) {
         return res.status(500).json({ success: false, msg: err.message });
       }
 
-      newUser.targetUser.getTransmitObjet((err, userdata) => {
+      newUser.getTransmitObjet((err, userdata) => {
         if (err) {
           logger.logError("Error while getTransmitObjet in authenticate", err);
           return res.status(500).json({ success: false, msg: err.msg });
