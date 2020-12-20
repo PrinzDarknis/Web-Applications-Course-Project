@@ -247,7 +247,7 @@ exports.askFriend = function (req, res) {
       });
     } else {
       // Version 3.2 = Without transaction => bad
-      req.user.save({ session }, (err, changedUser) => {
+      req.user.save((err, changedUser) => {
         if (err) {
           logger.logError("Error save friendship at save user", err);
           return session.abortTransaction(() => {
@@ -258,7 +258,7 @@ exports.askFriend = function (req, res) {
         }
 
         // target
-        req.targetUser.save({ session }, (err, changedTarget) => {
+        req.targetUser.save((err, changedTarget) => {
           if (err) {
             logger.logError("Error save friendship at save target", err);
             return session.abortTransaction(() => {
