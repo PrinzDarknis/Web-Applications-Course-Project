@@ -241,6 +241,26 @@ define({ "api": [
     "title": "Get Image from Post",
     "name": "GetPostImage",
     "group": "Post",
+    "header": {
+      "fields": {
+        "Optional Headers": [
+          {
+            "group": "Optional Headers",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Authorization via JWT. <br/> Also possible as Cookie. The Cookie needs to be <code>jwt</code> and needs to be in the format: <br/> <code>JWT Ahjdkjsdjiw...</code></p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n  \"Authorization\": \"JWT Ahjdkjsdjiw...\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -277,26 +297,6 @@ define({ "api": [
     "version": "0.0.0",
     "filename": "./routes/posts.js",
     "groupTitle": "Post",
-    "header": {
-      "fields": {
-        "Optional Headers": [
-          {
-            "group": "Optional Headers",
-            "type": "String",
-            "optional": false,
-            "field": "Authorization",
-            "description": "<p>Authorization via JWT.</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Header-Example:",
-          "content": "{\n  \"Authorization\": \"JWT Ahjdkjsdjiw...\"\n}",
-          "type": "json"
-        }
-      ]
-    },
     "error": {
       "fields": {
         "Error 4xx": [

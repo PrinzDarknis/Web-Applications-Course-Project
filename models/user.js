@@ -71,10 +71,10 @@ UserSchema.method("getTransmitObjet", function (callback, privacy = false) {
     extUser.populate(
       { path: "friendsAsked", select: "username _id" },
       (err, extUser) => {
-        if (err) callback(err, null);
+        if (err) return callback(err, null);
 
         if (privacy) {
-          callback(null, {
+          return callback(null, {
             id: extUser._id,
             name: extUser.name,
             username: extUser.username,
@@ -82,7 +82,7 @@ UserSchema.method("getTransmitObjet", function (callback, privacy = false) {
           });
         }
 
-        callback(null, {
+        return callback(null, {
           id: extUser._id,
           name: extUser.name,
           username: extUser.username,

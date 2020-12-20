@@ -4,7 +4,6 @@ const sharp = require("sharp");
 
 const logger = require("../logger");
 const Post = require("../models/post");
-const User = require("../models/user");
 
 // Get List of Posts
 // Params: newer, older, max, author
@@ -168,9 +167,7 @@ exports.writePost = function (req, res) {
       })
       .catch((err) => {
         logger.logError("Coudn't resize Image", err);
-        res
-          .status(500)
-          .json({ success: false, message: "Coudn't process Image" });
+        res.status(500).json({ success: false, msg: "Couldn’t process Image" });
       })
       .finally(() => {
         //Remove temp File

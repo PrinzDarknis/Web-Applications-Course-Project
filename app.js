@@ -16,6 +16,7 @@ try {
 // TOD-  5  User registration, authentication, and password storage
 // TOD-  2  Add access permissions: blog is open to everyone, to registered users, to specific users, to owner only
 // TOD-  3  Provide data from your application through an API and document it with a suitable tool, e.g. with apiDoc or API Blueprint.
+// TOD-  3  Using a cache (frontend)
 
 const express = require("express");
 const path = require("path");

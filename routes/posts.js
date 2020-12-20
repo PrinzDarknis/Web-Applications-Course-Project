@@ -14,9 +14,6 @@ const {
   validateIsDate,
 } = require("../middleware");
 
-const Post = require("../models/post");
-const { logError } = require("../logger");
-
 /**
  * @apiDefine Error404
  * @apiError PostNotFound The <code>id</code> of the Post was not found.
@@ -366,7 +363,11 @@ router.get(
  * @apiName GetPostImage
  * @apiGroup Post
  *
- * @apiUse autorization_optional
+ * @apiHeader (Optional Headers) {String} Authorization Authorization via JWT. <br/> Also possible as Cookie. The Cookie needs to be <code>jwt</code> and needs to be in the format: <br/> <code>JWT Ahjdkjsdjiw...</code>
+ * @apiHeaderExample {json} Header-Example:
+ *     {
+ *       "Authorization": "JWT Ahjdkjsdjiw..."
+ *     }
  *
  * @apiParam {Number} id Posts unique ID.
  * @apiParam {String="normal","small"} Size of the Image.

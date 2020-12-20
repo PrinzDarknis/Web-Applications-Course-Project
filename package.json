@@ -21,8 +21,8 @@
   },
   "homepage": "https://github.com/PrinzDarknis/Web-Applications-Course-Project#readme",
   "apidoc": {
-    "title": "Custom apiDoc browser title",
-    "url": "http://course-project-assignment4.rahtiapp.fi/"
+    "title": "The MicroBlogger",
+    "url": "http://course-project-v1-finishedprojects.rahtiapp.fi"
   },
   "dependencies": {
     "apidoc": "^0.25.0",

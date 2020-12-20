@@ -1,6 +1,6 @@
 {
-  "title": "Custom apiDoc browser title",
-  "url": "http://course-project-assignment4.rahtiapp.fi/",
+  "title": "The MicroBlogger",
+  "url": "http://course-project-v1-finishedprojects.rahtiapp.fi",
   "name": "web-applications-course-project",
   "version": "1.0.0",
   "description": "",
@@ -9,7 +9,7 @@
   "apidoc": "0.3.0",
   "generator": {
     "name": "apidoc",
-    "time": "2020-12-19T14:53:16.364Z",
+    "time": "2020-12-20T00:03:16.663Z",
     "url": "https://apidocjs.com",
     "version": "0.25.0"
   }

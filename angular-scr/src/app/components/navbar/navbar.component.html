@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-  <a class="navbar-brand" routerLink="/">MicroBloger</a>
+  <a class="navbar-brand" routerLink="/">MicroBlogger</a>
   <button
     class="navbar-toggler"
     type="button"
@@ -22,7 +22,9 @@
         <a class="nav-link" routerLink="/">Show New<span></span></a>
       </li> -->
       <li class="nav-item">
-        <a class="nav-link" href="/api">API<span></span></a>
+        <a class="nav-link" href="{{ userService.apiServer }}/api"
+          >API<span></span
+        ></a>
       </li>
     </ul>
     <ul class="navbar-nav ml-auto">
