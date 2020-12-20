@@ -113,13 +113,19 @@ export class PostService {
     let params = '';
 
     // Update
-    let update = authorID == this.authorID && !load_more && this.newestDate;
+    let update =
+      authorID == this.authorID &&
+      !load_more &&
+      typeof this.authorNewestDate != 'undefined';
     if (update) {
       params = `newer=${this.authorNewestDate}`;
     }
 
     // load more
-    let more = authorID == this.authorID && load_more && this.oldestDate;
+    let more =
+      authorID == this.authorID &&
+      load_more &&
+      typeof this.authorOldestDate != 'undefined';
     if (more) {
       params = `older=${this.authorOldestDate}`;
     }
@@ -138,14 +144,14 @@ export class PostService {
       if (response.success) {
         if (update) {
           this.authorPosts = response.result.concat(this.authorPosts);
-          this.authorNewestDate = response.firstDate;
+          if (response.firstDate) this.authorNewestDate = response.firstDate;
         } else if (more) {
           this.authorPosts = this.authorPosts.concat(response.result);
-          this.authorOldestDate = response.lastDate;
+          if (response.lastDate) this.authorOldestDate = response.lastDate;
         } else {
           this.authorPosts = response.result;
-          this.authorNewestDate = response.firstDate;
-          this.authorOldestDate = response.lastDate;
+          if (response.firstDate) this.authorNewestDate = response.firstDate;
+          if (response.lastDate) this.authorOldestDate = response.lastDate;
         }
       } else {
         this.flashMessage.show(
