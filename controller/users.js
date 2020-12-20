@@ -192,19 +192,61 @@ exports.askFriend = function (req, res) {
     req.targetUser.friends.push(req.user._id.toString());
 
     // save
-    User.startSession(null, (err, session) => {
-      if (err) {
-        logger.logError("Error save friendship at startSession", err);
-        return session.abortTransaction(() => {
-          return res
-            .status(500)
-            .json({ success: false, msg: "Failed to send Friendship" });
+    if (process.env.MongoDbVersion != "3.2") {
+      // Version 3.6 with transaction => good/save
+      User.startSession(null, (err, session) => {
+        if (err) {
+          logger.logError("Error save friendship at startSession", err);
+          return session.abortTransaction(() => {
+            return res
+              .status(500)
+              .json({ success: false, msg: "Failed to send Friendship" });
+          });
+        }
+
+        session.startTransaction();
+
+        // user
+        req.user.save({ session }, (err, changedUser) => {
+          if (err) {
+            logger.logError("Error save friendship at save user", err);
+            return session.abortTransaction(() => {
+              return res
+                .status(500)
+                .json({ success: false, msg: "Failed to send Friendship" });
+            });
+          }
+
+          // target
+          req.targetUser.save({ session }, (err, changedTarget) => {
+            if (err) {
+              logger.logError("Error save friendship at save target", err);
+              return session.abortTransaction(() => {
+                return res
+                  .status(500)
+                  .json({ success: false, msg: "Failed to send Friendship" });
+              });
+            }
+
+            // success
+            session.commitTransaction((err) => {
+              if (err) {
+                logger.logError(
+                  "Error save friendship at commitTransaction",
+                  err
+                );
+                return res
+                  .status(500)
+                  .json({ success: false, msg: "Failed to send Friendship" });
+              }
+
+              return res.json({ success: true, state: "friend" });
+            });
+          });
         });
-      }
-
-      session.startTransaction();
-
-      // user
+      });
+    } else {
+      // Version 3.2 = Without transaction => bad
       req.user.save({ session }, (err, changedUser) => {
         if (err) {
           logger.logError("Error save friendship at save user", err);
@@ -226,23 +268,10 @@ exports.askFriend = function (req, res) {
             });
           }
 
-          // success
-          session.commitTransaction((err) => {
-            if (err) {
-              logger.logError(
-                "Error save friendship at commitTransaction",
-                err
-              );
-              return res
-                .status(500)
-                .json({ success: false, msg: "Failed to send Friendship" });
-            }
-
-            return res.json({ success: true, state: "friend" });
-          });
+          return res.json({ success: true, state: "friend" });
         });
       });
-    });
+    }
 
     return;
   }
