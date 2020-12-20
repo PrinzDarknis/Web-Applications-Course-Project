@@ -1,5 +1,6 @@
 ### Create
-POST http://localhost/api/users/register
+POST http://course-project-v1-finishedprojects.rahtiapp.fi/api/users/register
+#POST http://localhost/api/users/register
 Content-Type: application/json
 
 {
@@ -10,7 +11,8 @@ Content-Type: application/json
 }
 
 ### Authentification
-POST http://localhost/api/users/authenticate
+POST http://course-project-v1-finishedprojects.rahtiapp.fi/api/users/authenticate
+#POST http://localhost/api/users/authenticate
 Content-Type: application/json
 
 {
@@ -19,7 +21,8 @@ Content-Type: application/json
 }
 
 ### Authentification; Fail
-POST http://localhost/api/users/authenticate
+POST http://course-project-v1-finishedprojects.rahtiapp.fi/api/users/authenticate
+#POST http://localhost/api/users/authenticate
 Content-Type: application/json
 
 {
@@ -28,15 +31,18 @@ Content-Type: application/json
 }
 
 ### Profile
-GET http://localhost/api/users/5fda15614d46c345a00306d0
-Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZGExNTE1NGQ0NmMzNDVhMDAzMDZjYyIsIm5hbWUiOiJKb2huIERvZSIsInVzZXJuYW1lIjoiam9obiIsImVtYWlsIjoiam9obkBtYWlsLmRlIiwicHJpdmFjeSI6ImV2ZXJ5b25lIiwiZnJpZW5kcyI6W10sImZyaWVuZHNBc2tlZCI6W10sImlhdCI6MTYwODEyODQ3MSwiZXhwIjoxNjA4NzMzMjcxfQ.W6B8F9zU3Bsx_q-o1YGaWF56lc1MiGIq4DteVEA_eJ4
+GET http://course-project-v1-finishedprojects.rahtiapp.fi/api/users/5fda15614d46c345a00306d0
+#GET http://localhost/api/users/5fda15614d46c345a00306d0
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZGVlZDU5MDBjNDhiMDAxYTkxM2UxNSIsIm5hbWUiOiJKb2huIERvZSIsInVzZXJuYW1lIjoiam9obiIsImVtYWlsIjoiam9obkB1c2VyLmRlIiwicHJpdmFjeSI6ImV2ZXJ5b25lIiwiZnJpZW5kcyI6W3siX2lkIjoiNWZkZWVkMDMwMGM0OGIwMDFhOTEzZTEzIiwidXNlcm5hbWUiOiJwcml2YXRlIn0seyJfaWQiOiI1ZmRlZWJmYzAwYzQ4YjAwMWE5MTNlMTEiLCJ1c2VybmFtZSI6ImZyaWVuZHMifV0sImZyaWVuZHNBc2tlZCI6W10sImlhdCI6MTYwODQ0NzEwMCwiZXhwIjoxNjA5MDUxOTAwfQ.TLzK_33vYGrZCbF-ORD9Aowi3XqrqEzjbjLpWS9rrtc 
 
 ### Profile; Fail
-GET http://localhost/api/users/5fd7a30fb951e4131cf4a2cd
+GET http://course-project-v1-finishedprojects.rahtiapp.fi/api/users/5fd7a30fb951e4131cf4a2cd
+#GET http://localhost/api/users/5fd7a30fb951e4131cf4a2cd
 
 ### Change User
-POST http://localhost/api/users/5fda15444d46c345a00306cf
-Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZGExNTQ0NGQ0NmMzNDVhMDAzMDZjZiIsIm5hbWUiOiJSZWdpc3RlcmVkIiwidXNlcm5hbWUiOiJyZWciLCJlbWFpbCI6ImpvaG5AbWFpbC5kZSIsInByaXZhY3kiOiJldmVyeW9uZSIsImZyaWVuZHMiOltdLCJmcmllbmRzQXNrZWQiOltdLCJpYXQiOjE2MDgxMjgwMTQsImV4cCI6MTYwODczMjgxNH0.RkHGYECJFvkrdvdTtLrKa1FEwctThjV1PLntois8PcE
+POST http://course-project-v1-finishedprojects.rahtiapp.fi/api/users/5fda15444d46c345a00306cf
+#POST http://localhost/api/users/5fda15444d46c345a00306cf
+Authorization: JWT 
 Content-Type: application/json
 
 {
@@ -46,9 +52,9 @@ Content-Type: application/json
 }
 
 ### Change User; Fail
-POST http://localhost/api/users/5fd95f8eb4599529f8194500
-Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZDdhMzBmYjk1MWU0MTMxY2Y0YTJjYyIsIm5hbWUiOiJKb2huIERvZSIsInVzZXJuYW1lIjoiam9obiIsImVtYWlsIjoiam9obkBtYWlsLmRlIiwicHJpdmFjeSI6ImV2ZXJ5b25lIiwiZnJpZW5kcyI6W10sImZyaWVuZHNBc2tlZCI6W10sImlhdCI6MTYwNzk2OTM0MSwiZXhwIjoxNjA4NTc0MTQxfQ.O7_aROwo-frXKuFbuJdovmbmj8m0xVwD5Pl9wp8eg8o
-Content-Type: application/json
+POST http://course-project-v1-finishedprojects.rahtiapp.fi/api/users/5fd95f8eb4599529f8194500
+#POST http://localhost/api/users/5fd95f8eb4599529f8194500
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZGVlZDU5MDBjNDhiMDAxYTkxM2UxNSIsIm5hbWUiOiJKb2huIERvZSIsInVzZXJuYW1lIjoiam9obiIsImVtYWlsIjoiam9obkB1c2VyLmRlIiwicHJpdmFjeSI6ImV2ZXJ5b25lIiwiZnJpZW5kcyI6W3siX2lkIjoiNWZkZWVkMDMwMGM0OGIwMDFhOTEzZTEzIiwidXNlcm5hbWUiOiJwcml2YXRlIn0seyJfaWQiOiI1ZmRlZWJmYzAwYzQ4YjAwMWE5MTNlMTEiLCJ1c2VybmFtZSI6ImZyaWVuZHMifV0sImZyaWVuZHNBc2tlZCI6W10sImlhdCI6MTYwODQ0NzEwMCwiZXhwIjoxNjA5MDUxOTAwfQ.TLzK_33vYGrZCbF-ORD9Aowi3XqrqEzjbjLpWS9rrtc 
 
 {
     "username": "changed",
@@ -57,13 +63,16 @@ Content-Type: application/json
 }
 
 ### Friend; self
-POST http://localhost/api/users/5fd7a30fb951e4131cf4a2cc/askFriend
-Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZDdhMzBmYjk1MWU0MTMxY2Y0YTJjYyIsIm5hbWUiOiJKb2huIERvZSIsInVzZXJuYW1lIjoiam9obiIsImVtYWlsIjoiam9obkBtYWlsLmRlIiwicHJpdmFjeSI6ImV2ZXJ5b25lIiwiZnJpZW5kcyI6W10sImZyaWVuZHNBc2tlZCI6W10sImlhdCI6MTYwNzk2OTM0MSwiZXhwIjoxNjA4NTc0MTQxfQ.O7_aROwo-frXKuFbuJdovmbmj8m0xVwD5Pl9wp8eg8o
+POST http://course-project-v1-finishedprojects.rahtiapp.fi/api/users/5fd7a30fb951e4131cf4a2cc/askFriend
+#POST http://localhost/api/users/5fd7a30fb951e4131cf4a2cc/askFriend
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZGVlZDU5MDBjNDhiMDAxYTkxM2UxNSIsIm5hbWUiOiJKb2huIERvZSIsInVzZXJuYW1lIjoiam9obiIsImVtYWlsIjoiam9obkB1c2VyLmRlIiwicHJpdmFjeSI6ImV2ZXJ5b25lIiwiZnJpZW5kcyI6W3siX2lkIjoiNWZkZWVkMDMwMGM0OGIwMDFhOTEzZTEzIiwidXNlcm5hbWUiOiJwcml2YXRlIn0seyJfaWQiOiI1ZmRlZWJmYzAwYzQ4YjAwMWE5MTNlMTEiLCJ1c2VybmFtZSI6ImZyaWVuZHMifV0sImZyaWVuZHNBc2tlZCI6W10sImlhdCI6MTYwODQ0NzEwMCwiZXhwIjoxNjA5MDUxOTAwfQ.TLzK_33vYGrZCbF-ORD9Aowi3XqrqEzjbjLpWS9rrtc 
 
 ### Friend; ask
-POST http://localhost/api/users/5fda15154d46c345a00306cc/askFriend
-Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZGExNTZmNGQ0NmMzNDVhMDAzMDZkMSIsIm5hbWUiOiJQcml2YXRlIiwidXNlcm5hbWUiOiJwcml2YXRlIiwiZW1haWwiOiJqb2huQG1haWwuZGUiLCJwcml2YWN5IjoicHJpdmF0ZSIsImZyaWVuZHMiOltdLCJmcmllbmRzQXNrZWQiOltdLCJpYXQiOjE2MDgxMjg0MzMsImV4cCI6MTYwODczMzIzM30.LBQaf1K3TY38NN1X1urS20l49xEQE5Xq_pbPngOkuaA
+POST http://course-project-v1-finishedprojects.rahtiapp.fi/api/users/5fda15154d46c345a00306cc/askFriend
+#POST http://localhost/api/users/5fda15154d46c345a00306cc/askFriend
+Authorization: JWT 
 
 ### Friend; both
-POST http://localhost/api/users/5fd7a30fb951e4131cf4a2cc/askFriend
-Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZDdkMjA2YTI0MmFiMjE4ODVkMjQ5NSIsIm5hbWUiOiJ0ZXN0IiwidXNlcm5hbWUiOiJ0MDEiLCJlbWFpbCI6ImpvaG5AbWFpbC5kZSIsInByaXZhY3kiOiJldmVyeW9uZSIsImZyaWVuZHMiOltdLCJmcmllbmRzQXNrZWQiOlsiNWZkN2EzMGZiOTUxZTQxMzFjZjRhMmNjIl0sImlhdCI6MTYwNzk3OTkxNiwiZXhwIjoxNjA4NTg0NzE2fQ.zQ_g6q9mtkbq3Lj0OH374Dn217Drw-VYkhCye1qnhnw
+POST http://course-project-v1-finishedprojects.rahtiapp.fi/api/users/5fd7a30fb951e4131cf4a2cc/askFriend
+#POST http://localhost/api/users/5fd7a30fb951e4131cf4a2cc/askFriend
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZGVlZDU5MDBjNDhiMDAxYTkxM2UxNSIsIm5hbWUiOiJKb2huIERvZSIsInVzZXJuYW1lIjoiam9obiIsImVtYWlsIjoiam9obkB1c2VyLmRlIiwicHJpdmFjeSI6ImV2ZXJ5b25lIiwiZnJpZW5kcyI6W3siX2lkIjoiNWZkZWVkMDMwMGM0OGIwMDFhOTEzZTEzIiwidXNlcm5hbWUiOiJwcml2YXRlIn0seyJfaWQiOiI1ZmRlZWJmYzAwYzQ4YjAwMWE5MTNlMTEiLCJ1c2VybmFtZSI6ImZyaWVuZHMifV0sImZyaWVuZHNBc2tlZCI6W10sImlhdCI6MTYwODQ0NzEwMCwiZXhwIjoxNjA5MDUxOTAwfQ.TLzK_33vYGrZCbF-ORD9Aowi3XqrqEzjbjLpWS9rrtc 

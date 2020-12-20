@@ -12,7 +12,7 @@ To befriend someone both users’ needs to asked each other to be friends. A use
 
 ## Links
 
-- [Explanation Video](https://youtube.de)
+- [Explanation Video](https://youtu.be/ll8pPNvcgXg)
 
 - [Running Software](http://course-project-v1-finishedprojects.rahtiapp.fi/)
 
